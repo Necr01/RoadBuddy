@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Control Panel — Road Buddy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/messaging.css">
+  <link rel="stylesheet" href="css/ratings.css">
+  <link rel="stylesheet" href="css/admin-sections.css">
+</head>
+<body>
+
+  <div class="dashboard admin-dashboard">
+
+    <!-- ===================== ADMIN SIDEBAR ===================== -->
+    <aside class="sidebar admin-sidebar" id="sidebar">
+      <div class="sidebar__header admin-sidebar__header">
+        <a href="index.html" class="navbar__logo">
+          <div class="navbar__logo-icon" style="width: 2rem; height: 2rem; font-size: 1rem;"><i class="fas fa-road"></i></div>
+          <span class="navbar__logo-text" style="color: var(--white); font-size: 1.125rem;">RoadBuddy</span>
+        </a>
+        <div class="admin-sidebar-badge">
+          <i class="fas fa-shield-halved"></i> Admin
+        </div>
+      </div>
+
+      <nav class="sidebar__nav">
+        <div class="sidebar__section">
+          <div class="sidebar__section-title" style="color: rgba(255,255,255,0.4);">Overview</div>
+          <a href="#" class="sidebar__link admin-sidebar__link active" onclick="showSection('overview', this)">
+            <i class="fas fa-gauge-high"></i> Dashboard
+          </a>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('analytics', this)">
+            <i class="fas fa-chart-line"></i> Analytics
+            <span class="badge-count admin-badge-count">Live</span>
+          </a>
+        </div>
+
+        <div class="sidebar__section">
+          <div class="sidebar__section-title" style="color: rgba(255,255,255,0.4);">User Management</div>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('motorists', this)">
+            <i class="fas fa-car"></i> Motorists
+            <span class="badge-count admin-badge-count">10.4K</span>
+          </a>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('providers', this)">
+            <i class="fas fa-wrench"></i> Providers
+            <span class="badge-count admin-badge-count admin-badge-count--alert">12</span>
+          </a>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('verification', this)">
+            <i class="fas fa-user-check"></i> Verification Queue
+            <span class="badge-count admin-badge-count admin-badge-count--alert">7</span>
+          </a>
+        </div>
+
+        <div class="sidebar__section">
+          <div class="sidebar__section-title" style="color: rgba(255,255,255,0.4);">Platform</div>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('requests', this)">
+            <i class="fas fa-bolt"></i> All Requests
+          </a>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('messages', this)">
+            <i class="fas fa-comments"></i> Message Log
+            <span class="badge-count admin-badge-count admin-badge-count--alert" id="adminMsgBadge" style="display:none;">2</span>
+          </a>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('subscriptions', this)">
+            <i class="fas fa-credit-card"></i> Subscriptions
+          </a>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('reports', this)">
+            <i class="fas fa-flag"></i> Reports & Disputes
+            <span class="badge-count admin-badge-count admin-badge-count--alert">3</span>
+          </a>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('reviews', this)">
+            <i class="fas fa-star"></i> Reviews
+          </a>
+        </div>
+
+        <div class="sidebar__section">
+          <div class="sidebar__section-title" style="color: rgba(255,255,255,0.4);">System</div>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('admins', this)">
+            <i class="fas fa-users-gear"></i> Admin Accounts
+          </a>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('audit', this)">
+            <i class="fas fa-list-check"></i> Audit Log
+          </a>
+          <a href="#" class="sidebar__link admin-sidebar__link" onclick="showSection('settings', this)">
+            <i class="fas fa-gear"></i> System Settings
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar__footer admin-sidebar__footer">
+        <div class="sidebar__user">
+          <div class="sidebar__user-avatar admin-sidebar__user-avatar">SA</div>
+          <div>
+            <div class="sidebar__user-name" style="color: var(--white);">System Admin</div>
+            <div class="sidebar__user-role" style="color: rgba(255,255,255,0.5);">Super Administrator</div>
+          </div>
+        </div>
+        <a href="login-admin.html" class="btn btn--ghost btn--sm btn--full admin-signout-btn" style="margin-top: 0.5rem;">
+          <i class="fas fa-right-from-bracket"></i> Sign Out
+        </a>
+      </div>
+    </aside>
+
+    <!-- ===================== MAIN CONTENT ===================== -->
+    <main class="dashboard__main">
+
+      <!-- Top Bar -->
+      <div class="dashboard__topbar admin-topbar">
+        <div class="dashboard__topbar-left">
+          <button class="btn btn--ghost btn--icon" id="sidebarToggle" style="display: none;">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div>
+            <h1 class="dashboard__topbar-title" id="pageTitle">Admin Dashboard</h1>
+            <div style="font-size: 0.75rem; color: var(--gray-400); margin-top: 0.125rem;" id="pageSubtitle">RoadBuddy Control Panel · Super Admin</div>
+          </div>
+        </div>
+        <div class="dashboard__topbar-right">
+          <div class="topbar__search">
+            <i class="fas fa-search topbar__search-icon"></i>
+            <input type="text" class="topbar__search-input" placeholder="Search users, providers, requests...">
+          </div>
+          <!-- Alert Bell -->
+          <button class="topbar__notification admin-topbar__notification" onclick="toggleAlertPanel()">
+            <i class="fas fa-bell"></i>
+            <span class="topbar__notification-badge"></span>
+          </button>
+          <!-- Dark Mode Toggle -->
+          <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle dark mode" onclick="toggleDarkMode()">
+            <i class="fas fa-moon" id="darkModeIcon"></i>
+          </button>
+          <!-- Admin quick action -->
+          <button class="btn btn--sm admin-action-btn" onclick="showSection('verification', document.querySelector('.admin-sidebar__link:nth-child(5)'))">
+            <i class="fas fa-user-check"></i> Verify Providers
+          </button>
+        </div>
+      </div>
+
+      <!-- ===================== SECTION: OVERVIEW ===================== -->
+      <div class="dashboard__content admin-section" id="section-overview">
+
+        <!-- Platform Alert Banner -->
+        <div class="admin-alert-banner">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <i class="fas fa-triangle-exclamation" style="color: var(--accent-500); font-size: 1rem;"></i>
+            <div>
+              <span style="font-weight: 600; color: var(--gray-900);">7 providers</span>
+              <span style="color: var(--gray-600);"> are awaiting verification, and </span>
+              <span style="font-weight: 600; color: var(--gray-900);">3 active disputes</span>
+              <span style="color: var(--gray-600);"> require attention.</span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="btn btn--accent btn--sm" onclick="showSection('verification', null)">Review Now</button>
+            <button class="btn btn--ghost btn--sm" onclick="this.closest('.admin-alert-banner').remove()"><i class="fas fa-times"></i></button>
+          </div>
+        </div>
+
+        <!-- Platform Stats -->
+        <div class="stats-grid admin-stats-grid">
+          <div class="stat-card admin-stat-card">
+            <div class="stat-card__icon" style="background: var(--admin-primary-10); color: var(--admin-primary);">
+              <i class="fas fa-users"></i>
+            </div>
+            <div>
+              <div class="stat-card__value">10,432</div>
+              <div class="stat-card__label">Total Motorists</div>
+              <div class="stat-card__change stat-card__change--up"><i class="fas fa-arrow-up"></i> +234 this week</div>
+            </div>
+          </div>
+
+          <div class="stat-card admin-stat-card">
+            <div class="stat-card__icon" style="background: var(--accent-100); color: var(--accent-600);">
+              <i class="fas fa-store"></i>
+            </div>
+            <div>
+              <div class="stat-card__value">523</div>
+              <div class="stat-card__label">Active Providers</div>
+              <div class="stat-card__change stat-card__change--up"><i class="fas fa-arrow-up"></i> +12 this week</div>
+            </div>
+          </div>
+
+          <div class="stat-card admin-stat-card">
+            <div class="stat-card__icon" style="background: var(--success-100); color: var(--success-600);">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <div>
+              <div class="stat-card__value">1,847</div>
+              <div class="stat-card__label">Requests This Month</div>
+              <div class="stat-card__change stat-card__change--up"><i class="fas fa-arrow-up"></i> +18% vs last month</div>
+            </div>
+          </div>
+
+          <div class="stat-card admin-stat-card">
+            <div class="stat-card__icon" style="background: var(--admin-primary-10); color: var(--admin-primary);">
+              <i class="fas fa-peso-sign"></i>
+            </div>
+            <div>
+              <div class="stat-card__value">₱261,500</div>
+              <div class="stat-card__label">Monthly Revenue</div>
+              <div class="stat-card__change stat-card__change--up"><i class="fas fa-arrow-up"></i> +22% vs last month</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Grid: Provider Approvals + Recent Activity -->
+        <div class="dashboard-grid-2">
+
+          <!-- Provider Verification Queue -->
+          <div class="request-card">
+            <div class="request-card__header">
+              <div class="request-card__title">
+                <i class="fas fa-user-check" style="color: var(--admin-primary); margin-right: 0.375rem;"></i> Pending Verifications
+              </div>
+              <span class="badge admin-badge-alert">7 pending</span>
+            </div>
+            <div class="request-card__body">
+
+              <div class="admin-verify-item">
+                <div class="admin-verify-item__avatar" style="background: var(--primary-100); color: var(--primary-600);">AF</div>
+                <div class="admin-verify-item__info">
+                  <div class="admin-verify-item__name">AutoFix Garage</div>
+                  <div class="admin-verify-item__meta">
+                    <i class="fas fa-wrench"></i> Mechanic · Brgy. Agusan, CDO · Applied 2h ago
+                  </div>
+                </div>
+                <div class="admin-verify-item__actions">
+                  <button class="btn btn--sm admin-btn-approve" onclick="approveProvider(this, 'AutoFix Garage')">
+                    <i class="fas fa-check"></i> Approve
+                  </button>
+                  <button class="btn btn--ghost btn--sm" onclick="rejectProvider(this)">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="admin-verify-item">
+                <div class="admin-verify-item__avatar" style="background: var(--accent-100); color: var(--accent-600);">QT</div>
+                <div class="admin-verify-item__info">
+                  <div class="admin-verify-item__name">QuickTow Express</div>
+                  <div class="admin-verify-item__meta">
+                    <i class="fas fa-truck-pickup"></i> Towing · Brgy. Bulua, CDO · Applied 4h ago
+                  </div>
+                </div>
+                <div class="admin-verify-item__actions">
+                  <button class="btn btn--sm admin-btn-approve" onclick="approveProvider(this, 'QuickTow Express')">
+                    <i class="fas fa-check"></i> Approve
+                  </button>
+                  <button class="btn btn--ghost btn--sm" onclick="rejectProvider(this)">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="admin-verify-item">
+                <div class="admin-verify-item__avatar" style="background: var(--success-100); color: var(--success-600);">TR</div>
+                <div class="admin-verify-item__info">
+                  <div class="admin-verify-item__name">TireRight PH</div>
+                  <div class="admin-verify-item__meta">
+                    <i class="fas fa-circle-dot"></i> Tire Service · Brgy. Gusa, CDO · Applied 6h ago
+                  </div>
+                </div>
+                <div class="admin-verify-item__actions">
+                  <button class="btn btn--sm admin-btn-approve" onclick="approveProvider(this, 'TireRight PH')">
+                    <i class="fas fa-check"></i> Approve
+                  </button>
+                  <button class="btn btn--ghost btn--sm" onclick="rejectProvider(this)">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="admin-verify-item">
+                <div class="admin-verify-item__avatar" style="background: var(--gray-100); color: var(--gray-600);">PS</div>
+                <div class="admin-verify-item__info">
+                  <div class="admin-verify-item__name">PowerStart Battery</div>
+                  <div class="admin-verify-item__meta">
+                    <i class="fas fa-battery-full"></i> Battery Service · Brgy. Puerto, CDO · Applied 1d ago
+                  </div>
+                </div>
+                <div class="admin-verify-item__actions">
+                  <button class="btn btn--sm admin-btn-approve" onclick="approveProvider(this, 'PowerStart Battery')">
+                    <i class="fas fa-check"></i> Approve
+                  </button>
+                  <button class="btn btn--ghost btn--sm" onclick="rejectProvider(this)">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div style="padding: 0.75rem 1.5rem; border-top: 1px solid var(--gray-100);">
+                <button class="btn btn--ghost btn--sm btn--full" onclick="showSection('verification', null)" style="justify-content: center;">
+                  View All 7 Pending <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Platform Activity -->
+          <div class="request-card">
+            <div class="request-card__header">
+              <div class="request-card__title">
+                <i class="fas fa-clock-rotate-left" style="color: var(--gray-400); margin-right: 0.375rem;"></i> Recent Activity
+              </div>
+              <button class="btn btn--ghost btn--sm">Refresh <i class="fas fa-rotate-right"></i></button>
+            </div>
+            <div class="request-card__body">
+
+              <div class="admin-activity-item">
+                <div class="admin-activity-item__icon admin-activity-item__icon--success">
+                  <i class="fas fa-user-plus"></i>
+                </div>
+                <div class="admin-activity-item__info">
+                  <div class="admin-activity-item__text"><strong>New motorist</strong> registered — Karen Lim (Brgy. Balulang)</div>
+                  <div class="admin-activity-item__time">2 min ago</div>
+                </div>
+              </div>
+
+              <div class="admin-activity-item">
+                <div class="admin-activity-item__icon admin-activity-item__icon--primary">
+                  <i class="fas fa-bolt"></i>
+                </div>
+                <div class="admin-activity-item__info">
+                  <div class="admin-activity-item__text"><strong>Assistance request</strong> completed — Flat Tire, Brgy. Carmen</div>
+                  <div class="admin-activity-item__time">8 min ago</div>
+                </div>
+              </div>
+
+              <div class="admin-activity-item">
+                <div class="admin-activity-item__icon admin-activity-item__icon--accent">
+                  <i class="fas fa-peso-sign"></i>
+                </div>
+                <div class="admin-activity-item__info">
+                  <div class="admin-activity-item__text"><strong>Subscription renewed</strong> — AutoFix Repair Shop (₱499)</div>
+                  <div class="admin-activity-item__time">15 min ago</div>
+                </div>
+              </div>
+
+              <div class="admin-activity-item">
+                <div class="admin-activity-item__icon admin-activity-item__icon--danger">
+                  <i class="fas fa-flag"></i>
+                </div>
+                <div class="admin-activity-item__info">
+                  <div class="admin-activity-item__text"><strong>Dispute filed</strong> — Motorist vs. QuickTow Express</div>
+                  <div class="admin-activity-item__time">23 min ago</div>
+                </div>
+              </div>
+
+              <div class="admin-activity-item">
+                <div class="admin-activity-item__icon admin-activity-item__icon--success">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="admin-activity-item__info">
+                  <div class="admin-activity-item__text"><strong>Provider verified</strong> — BatteryKing PH approved</div>
+                  <div class="admin-activity-item__time">41 min ago</div>
+                </div>
+              </div>
+
+              <div class="admin-activity-item">
+                <div class="admin-activity-item__icon admin-activity-item__icon--primary">
+                  <i class="fas fa-store"></i>
+                </div>
+                <div class="admin-activity-item__info">
+                  <div class="admin-activity-item__text"><strong>New provider</strong> applied — TireRight PH (Brgy. Iponan)</div>
+                  <div class="admin-activity-item__time">1 hr ago</div>
+                </div>
+              </div>
+
+              <div class="admin-activity-item">
+                <div class="admin-activity-item__icon" style="background: var(--gray-100); color: var(--gray-500);">
+                  <i class="fas fa-ban"></i>
+                </div>
+                <div class="admin-activity-item__info">
+                  <div class="admin-activity-item__text"><strong>Provider suspended</strong> — FakeMechanic.ph (spam reports)</div>
+                  <div class="admin-activity-item__time">2 hr ago</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Row: Disputes + Subscription Overview -->
+        <div class="dashboard-grid-2-wide">
+
+          <!-- Active Disputes -->
+          <div class="request-card">
+            <div class="request-card__header">
+              <div class="request-card__title">
+                <i class="fas fa-flag" style="color: var(--danger-500); margin-right: 0.375rem;"></i> Active Disputes
+              </div>
+              <span class="badge admin-badge-alert">3 open</span>
+            </div>
+            <div class="request-card__body">
+
+              <div class="admin-dispute-item">
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;">
+                  <div>
+                    <div style="font-weight: 600; font-size: 0.9rem; color: var(--gray-900);">#DSP-001 — Overcharging Complaint</div>
+                    <div style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.25rem;">
+                      <strong>Motorist:</strong> Roberto Garcia vs. <strong>Provider:</strong> MechPro Services
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--gray-400); margin-top: 0.25rem;">Filed: Feb 12, 2026 · Service: Engine Repair</div>
+                  </div>
+                  <span class="admin-dispute-badge admin-dispute-badge--open">Open</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.875rem;">
+                  <button class="btn btn--primary btn--sm" style="font-size: 0.8125rem;">
+                    <i class="fas fa-gavel"></i> Resolve
+                  </button>
+                  <button class="btn btn--ghost btn--sm" style="font-size: 0.8125rem;">View Details</button>
+                </div>
+              </div>
+
+              <div class="admin-dispute-item">
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;">
+                  <div>
+                    <div style="font-weight: 600; font-size: 0.9rem; color: var(--gray-900);">#DSP-002 — No-Show Provider</div>
+                    <div style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.25rem;">
+                      <strong>Motorist:</strong> Angela Cruz vs. <strong>Provider:</strong> QuickTow Express
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--gray-400); margin-top: 0.25rem;">Filed: Feb 13, 2026 · Service: Towing</div>
+                  </div>
+                  <span class="admin-dispute-badge admin-dispute-badge--review">Under Review</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.875rem;">
+                  <button class="btn btn--primary btn--sm" style="font-size: 0.8125rem;">
+                    <i class="fas fa-gavel"></i> Resolve
+                  </button>
+                  <button class="btn btn--ghost btn--sm" style="font-size: 0.8125rem;">View Details</button>
+                </div>
+              </div>
+
+              <div class="admin-dispute-item">
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;">
+                  <div>
+                    <div style="font-weight: 600; font-size: 0.9rem; color: var(--gray-900);">#DSP-003 — Fake Review Report</div>
+                    <div style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.25rem;">
+                      <strong>Reported by:</strong> Mark Tan · <strong>Provider:</strong> TopMechanic PH
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--gray-400); margin-top: 0.25rem;">Filed: Feb 14, 2026 · Type: Review Manipulation</div>
+                  </div>
+                  <span class="admin-dispute-badge admin-dispute-badge--open">Open</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-top: 0.875rem;">
+                  <button class="btn btn--primary btn--sm" style="font-size: 0.8125rem;">
+                    <i class="fas fa-gavel"></i> Resolve
+                  </button>
+                  <button class="btn btn--ghost btn--sm" style="font-size: 0.8125rem;">View Details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subscription Overview -->
+          <div class="card" style="padding: 0; border: 1px solid var(--gray-200);">
+            <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; justify-content: space-between;">
+              <h3 style="font-family: var(--font-display); font-weight: 600; font-size: 1.0625rem; color: var(--gray-900);">
+                <i class="fas fa-credit-card" style="color: var(--admin-primary); margin-right: 0.375rem;"></i> Subscription Overview
+              </h3>
+              <a href="#" class="btn btn--ghost btn--sm" onclick="showSection('subscriptions', null)">View All</a>
+            </div>
+            <div style="padding: 1.5rem;">
+
+              <!-- Subscription Breakdown -->
+              <div class="admin-sub-breakdown">
+                <div class="admin-sub-stat">
+                  <div class="admin-sub-stat__value" style="color: var(--success-600);">412</div>
+                  <div class="admin-sub-stat__label">Active</div>
+                </div>
+                <div class="admin-sub-stat">
+                  <div class="admin-sub-stat__value" style="color: var(--accent-600);">89</div>
+                  <div class="admin-sub-stat__label">Trial</div>
+                </div>
+                <div class="admin-sub-stat">
+                  <div class="admin-sub-stat__value" style="color: var(--danger-500);">22</div>
+                  <div class="admin-sub-stat__label">Expiring Soon</div>
+                </div>
+                <div class="admin-sub-stat">
+                  <div class="admin-sub-stat__value" style="color: var(--gray-400);">14</div>
+                  <div class="admin-sub-stat__label">Expired</div>
+                </div>
+              </div>
+
+              <!-- Revenue Bar -->
+              <div style="margin: 1.25rem 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                  <span style="font-size: 0.8125rem; color: var(--gray-600);">Monthly Revenue Target</span>
+                  <span style="font-size: 0.8125rem; font-weight: 700; color: var(--admin-primary);">₱261,500 / ₱300,000</span>
+                </div>
+                <div style="height: 8px; background: var(--gray-100); border-radius: var(--radius-full); overflow: hidden;">
+                  <div style="height: 100%; width: 87%; background: linear-gradient(90deg, var(--admin-primary), var(--admin-accent)); border-radius: var(--radius-full); transition: width 1s ease;"></div>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--gray-400); margin-top: 0.375rem;">87% of monthly target reached</div>
+              </div>
+
+              <!-- Expiring Soon List -->
+              <div>
+                <div style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; color: var(--gray-400); margin-bottom: 0.75rem;">Expiring Within 7 Days</div>
+
+                <div class="admin-expiry-item">
+                  <div style="font-size: 0.8125rem; font-weight: 600; color: var(--gray-900);">AutoFix Repair Shop</div>
+                  <span class="admin-expiry-badge">3 days</span>
+                </div>
+                <div class="admin-expiry-item">
+                  <div style="font-size: 0.8125rem; font-weight: 600; color: var(--gray-900);">CoolFix Auto Center</div>
+                  <span class="admin-expiry-badge">5 days</span>
+                </div>
+                <div class="admin-expiry-item">
+                  <div style="font-size: 0.8125rem; font-weight: 600; color: var(--gray-900);">PowerStart Services</div>
+                  <span class="admin-expiry-badge">6 days</span>
+                </div>
+                <div class="admin-expiry-item">
+                  <div style="font-size: 0.8125rem; font-weight: 600; color: var(--gray-900);">TireQuick PH</div>
+                  <span class="admin-expiry-badge">7 days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- END OVERVIEW SECTION -->
+
+      <!-- ===================== SECTION: PROVIDERS ===================== -->
+      <div class="dashboard__content admin-section" id="section-providers" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">Service Providers</h2>
+            <p class="admin-section-subtitle">Manage all registered service providers on the platform.</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem;">
+            <div class="topbar__search" style="width: 240px;">
+              <i class="fas fa-search topbar__search-icon"></i>
+              <input type="text" class="topbar__search-input" placeholder="Search providers...">
+            </div>
+            <select class="form-select" style="width: 160px; padding: 0.5rem 0.75rem; font-size: 0.875rem;">
+              <option>All Statuses</option>
+              <option>Active</option>
+              <option>Trial</option>
+              <option>Suspended</option>
+              <option>Pending</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-table-card">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Provider</th>
+                <th>Service Type</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Subscription</th>
+                <th>Rating</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="admin-table-user">
+                    <div class="admin-table-avatar" style="background: var(--accent-100); color: var(--accent-600);">JS</div>
+                    <div>
+                      <div class="admin-table-name">AutoFix Repair Shop</div>
+                      <div class="admin-table-email">juan.santos@autofix.ph</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="admin-type-badge"><i class="fas fa-wrench"></i> Mechanic</span></td>
+                <td><span class="admin-location"><i class="fas fa-location-dot"></i> Cagayan de Oro City</span></td>
+                <td><span class="admin-status-badge admin-status-badge--active">Active</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--gray-700);">Monthly · Exp. Mar 1</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--accent-500);">⭐ 4.8</span></td>
+                <td>
+                  <div class="admin-table-actions">
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn" title="View"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn" title="Edit"><i class="fas fa-pen"></i></button>
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn admin-tbl-btn--danger" title="Suspend"><i class="fas fa-ban"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="admin-table-user">
+                    <div class="admin-table-avatar" style="background: var(--primary-100); color: var(--primary-600);">QT</div>
+                    <div>
+                      <div class="admin-table-name">QuickTow Express</div>
+                      <div class="admin-table-email">ops@quicktow.ph</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="admin-type-badge"><i class="fas fa-truck-pickup"></i> Towing</span></td>
+                <td><span class="admin-location"><i class="fas fa-location-dot"></i> Brgy. Balubal, CDO</span></td>
+                <td><span class="admin-status-badge admin-status-badge--pending">Pending</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--gray-700);">Trial · 18d left</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--accent-500);">⭐ 4.2</span></td>
+                <td>
+                  <div class="admin-table-actions">
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn" title="View"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn--sm admin-btn-approve admin-tbl-btn" title="Approve"><i class="fas fa-check"></i></button>
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn admin-tbl-btn--danger" title="Reject"><i class="fas fa-times"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="admin-table-user">
+                    <div class="admin-table-avatar" style="background: var(--success-100); color: var(--success-600);">PB</div>
+                    <div>
+                      <div class="admin-table-name">PowerStart Battery</div>
+                      <div class="admin-table-email">service@powerstart.ph</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="admin-type-badge"><i class="fas fa-battery-full"></i> Battery</span></td>
+                <td><span class="admin-location"><i class="fas fa-location-dot"></i> Brgy. Bogo, CDO</span></td>
+                <td><span class="admin-status-badge admin-status-badge--active">Active</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--gray-700);">Annual · Exp. Dec 2026</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--accent-500);">⭐ 4.9</span></td>
+                <td>
+                  <div class="admin-table-actions">
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn" title="View"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn" title="Edit"><i class="fas fa-pen"></i></button>
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn admin-tbl-btn--danger" title="Suspend"><i class="fas fa-ban"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="admin-table-user">
+                    <div class="admin-table-avatar" style="background: var(--danger-100); color: var(--danger-500);">FM</div>
+                    <div>
+                      <div class="admin-table-name">FakeMechanic.ph</div>
+                      <div class="admin-table-email">unknown@fakemechanic.ph</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="admin-type-badge"><i class="fas fa-wrench"></i> Mechanic</span></td>
+                <td><span class="admin-location"><i class="fas fa-location-dot"></i> Unknown</span></td>
+                <td><span class="admin-status-badge admin-status-badge--suspended">Suspended</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--danger-500);">Expired</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--gray-400);">N/A</span></td>
+                <td>
+                  <div class="admin-table-actions">
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn" title="View"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn admin-tbl-btn--danger" title="Delete"><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===================== SECTION: MOTORISTS ===================== -->
+      <div class="dashboard__content admin-section" id="section-motorists" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">Motorists</h2>
+            <p class="admin-section-subtitle">View and manage all motorist accounts on the platform.</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem;">
+            <div class="topbar__search" style="width: 240px;">
+              <i class="fas fa-search topbar__search-icon"></i>
+              <input type="text" class="topbar__search-input" placeholder="Search motorists...">
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-table-card">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Motorist</th>
+                <th>Vehicle</th>
+                <th>Location</th>
+                <th>Total Requests</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="admin-table-user">
+                    <div class="admin-table-avatar">MR</div>
+                    <div>
+                      <div class="admin-table-name">Maria Reyes</div>
+                      <div class="admin-table-email">maria.reyes@email.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span style="font-size: 0.8125rem;">Toyota Vios 2022</span></td>
+                <td><span class="admin-location"><i class="fas fa-location-dot"></i> Brgy. Gusa, CDO</span></td>
+                <td><span style="font-weight: 600; color: var(--gray-900);">12</span></td>
+                <td><span class="admin-status-badge admin-status-badge--active">Active</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--gray-500);">Jan 5, 2026</span></td>
+                <td>
+                  <div class="admin-table-actions">
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn admin-tbl-btn--danger"><i class="fas fa-ban"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="admin-table-user">
+                    <div class="admin-table-avatar" style="background: var(--primary-100); color: var(--primary-600);">AC</div>
+                    <div>
+                      <div class="admin-table-name">Angela Cruz</div>
+                      <div class="admin-table-email">angela.cruz@email.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span style="font-size: 0.8125rem;">Honda City 2021</span></td>
+                <td><span class="admin-location"><i class="fas fa-location-dot"></i> Brgy. Canitoan, CDO</span></td>
+                <td><span style="font-weight: 600; color: var(--gray-900);">7</span></td>
+                <td><span class="admin-status-badge admin-status-badge--active">Active</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--gray-500);">Jan 12, 2026</span></td>
+                <td>
+                  <div class="admin-table-actions">
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn admin-tbl-btn--danger"><i class="fas fa-ban"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="admin-table-user">
+                    <div class="admin-table-avatar" style="background: var(--accent-100); color: var(--accent-600);">RG</div>
+                    <div>
+                      <div class="admin-table-name">Roberto Garcia</div>
+                      <div class="admin-table-email">r.garcia@email.com</div>
+                    </div>
+                  </div>
+                </td>
+                <td><span style="font-size: 0.8125rem;">Ford Ranger 2023</span></td>
+                <td><span class="admin-location"><i class="fas fa-location-dot"></i> Brgy. Agusan, CDO</span></td>
+                <td><span style="font-weight: 600; color: var(--gray-900);">3</span></td>
+                <td><span class="admin-status-badge admin-status-badge--active">Active</span></td>
+                <td><span style="font-size: 0.8125rem; color: var(--gray-500);">Feb 1, 2026</span></td>
+                <td>
+                  <div class="admin-table-actions">
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn--ghost btn--sm admin-tbl-btn admin-tbl-btn--danger"><i class="fas fa-ban"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===================== SECTION: VERIFICATION QUEUE ===================== -->
+      <div class="dashboard__content admin-section" id="section-verification" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">Provider Verification Queue</h2>
+            <p class="admin-section-subtitle">Review and approve or reject provider applications. All applicants must meet RoadBuddy standards.</p>
+          </div>
+          <span class="badge admin-badge-alert" style="font-size: 0.8125rem; padding: 0.5rem 1rem;">7 Pending</span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem;" id="verificationList">
+
+          <div class="admin-verify-card" id="vcard-1">
+            <div class="admin-verify-card__header">
+              <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="admin-table-avatar" style="width: 3rem; height: 3rem; font-size: 1rem; background: var(--primary-100); color: var(--primary-600);">AF</div>
+                <div>
+                  <div style="font-size: 1rem; font-weight: 700; color: var(--gray-900);">AutoFix Garage</div>
+                  <div style="font-size: 0.8125rem; color: var(--gray-500);">Applied 2 hours ago · Brgy. Agusan, CDO</div>
+                </div>
+              </div>
+              <span class="admin-dispute-badge admin-dispute-badge--open">Awaiting Review</span>
+            </div>
+            <div class="admin-verify-card__body">
+              <div class="admin-verify-detail"><span class="admin-verify-detail__label">Service Type</span><span class="admin-verify-detail__value"><i class="fas fa-wrench"></i> Mechanic / Repair Shop</span></div>
+              <div class="admin-verify-detail"><span class="admin-verify-detail__label">Business Address</span><span class="admin-verify-detail__value">123 Main St., Brgy. Agusan, Cagayan de Oro City</span></div>
+              <div class="admin-verify-detail"><span class="admin-verify-detail__label">Contact</span><span class="admin-verify-detail__value">+63 912 345 6789 · autofix@example.com</span></div>
+              <div class="admin-verify-detail"><span class="admin-verify-detail__label">Owner</span><span class="admin-verify-detail__value">Juan dela Cruz</span></div>
+            </div>
+            <div class="admin-verify-card__actions">
+              <button class="btn btn--sm admin-btn-approve" onclick="approveProviderCard('vcard-1', 'AutoFix Garage')">
+                <i class="fas fa-check"></i> Approve Provider
+              </button>
+              <button class="btn btn--outline btn--sm" style="border-color: var(--danger-300); color: var(--danger-500);" onclick="rejectProviderCard('vcard-1')">
+                <i class="fas fa-times"></i> Reject
+              </button>
+              <button class="btn btn--ghost btn--sm view-docs-btn" id="viewdocs-vcard-1" onclick="toggleDocuments('vcard-1')">
+                <i class="fas fa-folder-open"></i> View Documents
+              </button>
+              <button class="btn btn--ghost btn--sm" onclick="showComingSoon('Request More Info')">
+                <i class="fas fa-message"></i> Request More Info
+              </button>
+            </div>
+            <!-- Document viewer panel (Phase 4) -->
+            <div class="docs-panel" id="docs-vcard-1"></div>
+          </div>
+
+          <div class="admin-verify-card" id="vcard-2">
+            <div class="admin-verify-card__header">
+              <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="admin-table-avatar" style="width: 3rem; height: 3rem; font-size: 1rem; background: var(--accent-100); color: var(--accent-600);">QT</div>
+                <div>
+                  <div style="font-size: 1rem; font-weight: 700; color: var(--gray-900);">QuickTow Express</div>
+                  <div style="font-size: 0.8125rem; color: var(--gray-500);">Applied 4 hours ago · Brgy. Bulua, CDO</div>
+                </div>
+              </div>
+              <span class="admin-dispute-badge admin-dispute-badge--review">Under Review</span>
+            </div>
+            <div class="admin-verify-card__body">
+              <div class="admin-verify-detail"><span class="admin-verify-detail__label">Service Type</span><span class="admin-verify-detail__value"><i class="fas fa-truck-pickup"></i> Towing Service</span></div>
+              <div class="admin-verify-detail"><span class="admin-verify-detail__label">Business Address</span><span class="admin-verify-detail__value">45 Kauswagan Road, Brgy. Bulua, Cagayan de Oro City</span></div>
+              <div class="admin-verify-detail"><span class="admin-verify-detail__label">Contact</span><span class="admin-verify-detail__value">+63 998 765 4321 · ops@quicktow.ph</span></div>
+              <div class="admin-verify-detail"><span class="admin-verify-detail__label">Owner</span><span class="admin-verify-detail__value">Pedro Santos</span></div>
+            </div>
+            <div class="admin-verify-card__actions">
+              <button class="btn btn--sm admin-btn-approve" onclick="approveProviderCard('vcard-2', 'QuickTow Express')">
+                <i class="fas fa-check"></i> Approve Provider
+              </button>
+              <button class="btn btn--outline btn--sm" style="border-color: var(--danger-300); color: var(--danger-500);" onclick="rejectProviderCard('vcard-2')">
+                <i class="fas fa-times"></i> Reject
+              </button>
+              <button class="btn btn--ghost btn--sm view-docs-btn" id="viewdocs-vcard-2" onclick="toggleDocuments('vcard-2')">
+                <i class="fas fa-folder-open"></i> View Documents
+              </button>
+              <button class="btn btn--ghost btn--sm" onclick="showComingSoon('Request More Info')">
+                <i class="fas fa-message"></i> Request More Info
+              </button>
+            </div>
+            <!-- Document viewer panel (Phase 4) -->
+            <div class="docs-panel" id="docs-vcard-2"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===================== SECTION: MESSAGE LOG (Phase 2) ===================== -->
+      <div class="dashboard__content admin-section" id="section-messages" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">Message Log</h2>
+            <p class="admin-section-subtitle">Read-only view of all in-app conversations between motorists and providers.</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <div class="topbar__search" style="width: 240px;">
+              <i class="fas fa-search topbar__search-icon"></i>
+              <input type="text" class="topbar__search-input" placeholder="Search conversations...">
+            </div>
+            <span style="font-size: 0.8125rem; color: var(--gray-400);">
+              <i class="fas fa-eye"></i> Read-only
+            </span>
+          </div>
+        </div>
+
+        <!-- Summary stats -->
+        <div class="stats-grid" style="margin-bottom: 1.5rem;">
+          <div class="stat-card">
+            <div class="stat-card__icon" style="background: var(--primary-100); color: var(--primary-500);">
+              <i class="fas fa-comments"></i>
+            </div>
+            <div>
+              <div class="stat-card__value" id="adminMsgTotalThreads">2</div>
+              <div class="stat-card__label">Active Threads</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon" style="background: var(--danger-100); color: var(--danger-500);">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div>
+              <div class="stat-card__value" id="adminMsgTotalUnread">0</div>
+              <div class="stat-card__label">Unread Messages</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__icon" style="background: var(--success-100); color: var(--success-500);">
+              <i class="fas fa-message"></i>
+            </div>
+            <div>
+              <div class="stat-card__value" id="adminMsgTotalMessages">8</div>
+              <div class="stat-card__label">Total Messages</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-msg-log" id="adminMsgList">
+          <!-- Rendered by renderAdminMessageLog() in messaging.js -->
+          <div style="padding: 2rem; text-align: center; color: var(--gray-400);">
+            <i class="fas fa-spinner fa-spin"></i> Loading conversations...
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== SECTION: ALL REQUESTS ===================== -->
+            <!-- ═══════════════ REQUESTS LOG (Phase 5) ═══════════════ -->
+      <div class="dashboard__content admin-section" id="section-requests" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">All Requests</h2>
+            <p class="admin-section-subtitle">Every assistance request submitted on the platform.</p>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span class="table-count-chip" id="requestsCount"></span>
+            <button class="btn btn--ghost btn--sm" onclick="showComingSoon('Export CSV')">
+              <i class="fas fa-download"></i> Export
+            </button>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-row" style="margin-bottom:1.25rem;">
+          <button class="req-filter-btn req-filter-btn--active" data-filter="all"         onclick="filterRequests('all')">All</button>
+          <button class="req-filter-btn" data-filter="pending"      onclick="filterRequests('pending')">Pending</button>
+          <button class="req-filter-btn" data-filter="in-progress"  onclick="filterRequests('in-progress')">In Progress</button>
+          <button class="req-filter-btn" data-filter="completed"    onclick="filterRequests('completed')">Completed</button>
+          <button class="req-filter-btn" data-filter="cancelled"    onclick="filterRequests('cancelled')">Cancelled</button>
+        </div>
+
+        <div class="admin-table-card" style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th><th>Motorist</th><th>Provider</th><th>Type</th>
+                <th>Location</th><th>Date &amp; Time</th><th>Status</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="requestsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+        <div class="admin-placeholder-content"><i class="fas fa-bolt"></i><div>Requests Log</div><div class="admin-placeholder-sub">Full request history and management tools — Phase 1.</div></div>
+      </div>
+
+      <!-- Placeholder Sections -->
+            <!-- ═══════════════ ANALYTICS (Phase 5) ═══════════════ -->
+      <div class="dashboard__content admin-section" id="section-analytics" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">Analytics</h2>
+            <p class="admin-section-subtitle">Platform-wide performance metrics and request trends.</p>
+          </div>
+        </div>
+        <div id="analyticsContent">
+          <!-- Summary stats -->
+          <div class="analytics-stats">
+            <div class="analytics-stat-card">
+              <div class="analytics-stat-label"><i class="fas fa-users"></i> Total Users</div>
+              <div class="analytics-stat-value" id="anlTotalRequests">—</div>
+              <div class="analytics-stat-sub"><i class="fas fa-arrow-up"></i> +12% this month</div>
+            </div>
+            <div class="analytics-stat-card">
+              <div class="analytics-stat-label"><i class="fas fa-wrench"></i> Active Providers</div>
+              <div class="analytics-stat-value" id="anlActiveProviders">—</div>
+              <div class="analytics-stat-sub"><i class="fas fa-arrow-up"></i> +3 this month</div>
+            </div>
+            <div class="analytics-stat-card">
+              <div class="analytics-stat-label"><i class="fas fa-peso-sign"></i> Revenue (Feb)</div>
+              <div class="analytics-stat-value" id="anlRevenue">—</div>
+              <div class="analytics-stat-sub"><i class="fas fa-arrow-up"></i> +18% vs last month</div>
+            </div>
+            <div class="analytics-stat-card">
+              <div class="analytics-stat-label"><i class="fas fa-star"></i> Avg. Satisfaction</div>
+              <div class="analytics-stat-value" id="anlSatisfaction">—</div>
+              <div class="analytics-stat-sub" style="color:var(--success-500);">Excellent</div>
+            </div>
+          </div>
+
+          <!-- Charts row -->
+          <div class="analytics-charts">
+            <!-- Bar chart -->
+            <div class="chart-card" style="flex:1;">
+              <div class="chart-card__header">
+                <div>
+                  <div class="chart-card__title">Monthly Requests</div>
+                  <div class="chart-card__sub">Sep 2025 – Feb 2026</div>
+                </div>
+              </div>
+              <div class="chart-card__body">
+                <div class="chart-bars-wrap" id="analyticsBarChart"></div>
+                <div class="chart-legend">
+                  <div class="chart-legend-item"><div class="chart-legend-swatch" style="background:var(--primary-100);"></div> Total Requests</div>
+                  <div class="chart-legend-item"><div class="chart-legend-swatch" style="background:var(--primary-500);"></div> Completed</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Donut chart -->
+            <div class="chart-card donut-card">
+              <div class="chart-card__header">
+                <div class="chart-card__title">By Service Type</div>
+              </div>
+              <div class="chart-card__body">
+                <div class="donut-svg-wrap">
+                  <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" id="analyticsDonut">
+                    <circle cx="21" cy="21" r="15.9155" fill="none" stroke="var(--gray-100)" stroke-width="6"/>
+                  </svg>
+                  <div class="donut-center-label">
+                    <div class="donut-center-label__value">124</div>
+                    <div class="donut-center-label__sub">Requests</div>
+                  </div>
+                </div>
+                <div class="donut-legend" id="analyticsLegend"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Providers -->
+          <div class="chart-card">
+            <div class="chart-card__header">
+              <div class="chart-card__title">Top Providers This Month</div>
+              <div class="chart-card__sub">By jobs completed</div>
+            </div>
+            <div class="chart-card__body" id="analyticsTopProviders"></div>
+          </div>
+        </div>
+      </div>
+        <div class="admin-placeholder-content"><i class="fas fa-chart-line"></i><div>Analytics Dashboard</div><div class="admin-placeholder-sub">Detailed charts and metrics coming soon.</div></div>
+      </div>
+      
+        <div class="admin-placeholder-content"><i class="fas fa-bolt"></i><div>Requests Log</div><div class="admin-placeholder-sub">Full request history and management tools.</div></div>
+      </div>
+            <!-- ═══════════════ SUBSCRIPTIONS (Phase 5) ═══════════════ -->
+      <div class="dashboard__content admin-section" id="section-subscriptions" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">Subscriptions</h2>
+            <p class="admin-section-subtitle">Provider plan management and billing overview.</p>
+          </div>
+        </div>
+        <div id="subsContent">
+          <div class="subs-stats">
+            <div class="subs-stat">
+              <div class="subs-stat__value" id="subsTrial">—</div>
+              <div class="subs-stat__label">Free Trial</div>
+            </div>
+            <div class="subs-stat">
+              <div class="subs-stat__value" id="subsBasic">—</div>
+              <div class="subs-stat__label">Basic Plan</div>
+            </div>
+            <div class="subs-stat">
+              <div class="subs-stat__value" id="subsPro">—</div>
+              <div class="subs-stat__label">Professional</div>
+            </div>
+            <div class="subs-stat">
+              <div class="subs-stat__value" id="subsRevenue">—</div>
+              <div class="subs-stat__label">MRR (Active)</div>
+            </div>
+          </div>
+          <div class="admin-table-card" style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr><th>Provider</th><th>Plan</th><th>Status</th><th>Amount</th><th>Next Billing</th><th>Jobs Served</th><th></th></tr>
+              </thead>
+              <tbody id="subsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+        <div class="admin-placeholder-content"><i class="fas fa-credit-card"></i><div>Subscription Management</div><div class="admin-placeholder-sub">Billing records and subscription statuses.</div></div>
+      </div>
+            <!-- ═══════════════ DISPUTES (Phase 5) ═══════════════ -->
+      <div class="dashboard__content admin-section" id="section-reports" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">Reports &amp; Disputes</h2>
+            <p class="admin-section-subtitle">Review and resolve disputes between motorists and providers.</p>
+          </div>
+        </div>
+        <div class="filter-row" style="margin-bottom:1.25rem;">
+          <button class="req-filter-btn dispute-filter-btn req-filter-btn--active" data-filter="all"       onclick="filterDisputes('all')">All</button>
+          <button class="req-filter-btn dispute-filter-btn" data-filter="open"      onclick="filterDisputes('open')">Open</button>
+          <button class="req-filter-btn dispute-filter-btn" data-filter="escalated" onclick="filterDisputes('escalated')">Escalated</button>
+          <button class="req-filter-btn dispute-filter-btn" data-filter="resolved"  onclick="filterDisputes('resolved')">Resolved</button>
+        </div>
+        <div class="disputes-grid" id="disputesList"></div>
+      </div>
+        <div class="admin-placeholder-content"><i class="fas fa-flag"></i><div>Dispute Center</div><div class="admin-placeholder-sub">Full dispute resolution tools and history.</div></div>
+      </div>
+      <!-- ===================== SECTION: REVIEWS (Phase 4) ===================== -->
+      <div class="dashboard__content admin-section" id="section-reviews" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">Reviews &amp; Ratings</h2>
+            <p class="admin-section-subtitle">All motorist reviews submitted on the platform. Flag inappropriate content for removal.</p>
+          </div>
+        </div>
+
+        <!-- Stats bar -->
+        <div class="admin-review-stats">
+          <div class="admin-review-stat">
+            <div class="admin-review-stat__value" id="adminRevTotal">—</div>
+            <div class="admin-review-stat__label">Total Reviews</div>
+          </div>
+          <div class="admin-review-stat">
+            <div class="admin-review-stat__value" id="adminRevAvg">—</div>
+            <div class="admin-review-stat__label">Platform Average</div>
+          </div>
+          <div class="admin-review-stat">
+            <div class="admin-review-stat__value" id="adminRevFlagged">—</div>
+            <div class="admin-review-stat__label">Flagged</div>
+          </div>
+        </div>
+
+        <!-- Reviews list — populated by ratings.js renderAdminReviews() -->
+        <div class="admin-reviews-list" id="adminReviewsList">
+          <div style="padding:2rem;text-align:center;color:var(--gray-400);">
+            <i class="fas fa-spinner fa-spin"></i> Loading reviews…
+          </div>
+        </div>
+      </div>
+        <div class="admin-section-header"><div><h2 class="admin-section-title">Reviews</h2><p class="admin-section-subtitle">Monitor and moderate user reviews.</p></div></div>
+        <div class="admin-placeholder-content"><i class="fas fa-star"></i><div>Review Moderation</div><div class="admin-placeholder-sub">Review and remove inappropriate content.</div></div>
+      </div>
+            <!-- ═══════════════ ADMIN ACCOUNTS (Phase 5) ═══════════════ -->
+      <div class="dashboard__content admin-section" id="section-admins" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">Admin Accounts</h2>
+            <p class="admin-section-subtitle">Manage administrator access, roles, and permissions.</p>
+          </div>
+          <button class="btn btn--primary btn--sm invite-admin-btn" onclick="showComingSoon('Invite new admin')">
+            <i class="fas fa-user-plus"></i> Invite Admin
+          </button>
+        </div>
+        <div id="adminAccountsContent">
+          <div class="admin-table-card" style="overflow-x:auto;">
+            <table>
+              <thead>
+                <tr><th>Administrator</th><th>Role</th><th>Department</th><th>Status</th><th>Last Login</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="adminAccountsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+        <div class="admin-placeholder-content"><i class="fas fa-users-gear"></i><div>Admin Management</div><div class="admin-placeholder-sub">Invite, edit, or revoke admin access.</div></div>
+      </div>
+            <!-- ═══════════════ AUDIT LOG (Phase 5) ═══════════════ -->
+      <div class="dashboard__content admin-section" id="section-audit" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">Audit Log</h2>
+            <p class="admin-section-subtitle">Timestamped record of all administrator actions on the platform.</p>
+          </div>
+          <button class="btn btn--ghost btn--sm" onclick="showComingSoon('Export audit log')">
+            <i class="fas fa-download"></i> Export
+          </button>
+        </div>
+        <div id="auditLogContent">
+          <div class="audit-log-wrap">
+            <div id="auditLogList"></div>
+          </div>
+        </div>
+      </div>
+        <div class="admin-placeholder-content"><i class="fas fa-list-check"></i><div>Audit Trail</div><div class="admin-placeholder-sub">Timestamped record of all admin activity.</div></div>
+      </div>
+            <!-- ═══════════════ SETTINGS (Phase 5) ═══════════════ -->
+      <div class="dashboard__content admin-section" id="section-settings" style="display: none;">
+        <div class="admin-section-header">
+          <div>
+            <h2 class="admin-section-title">System Settings</h2>
+            <p class="admin-section-subtitle">Platform configuration, pricing, and operational controls.</p>
+          </div>
+          <button class="btn btn--primary btn--sm" onclick="saveAdminSettings()">
+            <i class="fas fa-floppy-disk"></i> Save Changes
+          </button>
+        </div>
+        <div id="settingsContent">
+          <div class="settings-grid">
+
+            <!-- Subscription Pricing -->
+            <div class="settings-card">
+              <div class="settings-card__header">
+                <div class="settings-card__icon" style="background:var(--primary-100);color:var(--primary-500);">
+                  <i class="fas fa-peso-sign"></i>
+                </div>
+                <div class="settings-card__title">Subscription Pricing</div>
+              </div>
+              <div class="settings-card__body">
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Free Trial Duration (days)</label>
+                  <input type="number" id="setTrialDays" class="form-input" value="30" min="7" max="90">
+                </div>
+                <div class="price-input-row">
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="form-label">Basic Plan (₱/month)</label>
+                    <input type="number" id="setPriceBasic" class="form-input" value="499" min="0">
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="form-label">Professional (₱/month)</label>
+                    <input type="number" id="setPricePro" class="form-input" value="1299" min="0">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Platform Controls -->
+            <div class="settings-card">
+              <div class="settings-card__header">
+                <div class="settings-card__icon" style="background:var(--accent-100);color:var(--accent-600);">
+                  <i class="fas fa-sliders"></i>
+                </div>
+                <div class="settings-card__title">Platform Controls</div>
+              </div>
+              <div class="settings-card__body">
+                <div class="settings-toggle-row">
+                  <div>
+                    <div class="settings-toggle-label">Allow New Registrations</div>
+                    <div class="settings-toggle-sub">Motorists and providers can sign up</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="toggle-allowRegistrations" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="settings-toggle-row">
+                  <div>
+                    <div class="settings-toggle-label">Auto-Approve Providers</div>
+                    <div class="settings-toggle-sub">Skip manual verification (not recommended)</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="toggle-autoApproveProviders">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="settings-toggle-row">
+                  <div>
+                    <div class="settings-toggle-label">Maintenance Mode</div>
+                    <div class="settings-toggle-sub">Block all non-admin access to the platform</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="toggle-maintenanceMode">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="settings-card">
+              <div class="settings-card__header">
+                <div class="settings-card__icon" style="background:var(--success-100);color:var(--success-600);">
+                  <i class="fas fa-bell"></i>
+                </div>
+                <div class="settings-card__title">Notifications</div>
+              </div>
+              <div class="settings-card__body">
+                <div class="settings-toggle-row">
+                  <div>
+                    <div class="settings-toggle-label">Email Notifications</div>
+                    <div class="settings-toggle-sub">Send system emails to users</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="toggle-emailNotifications" checked>
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="settings-toggle-row">
+                  <div>
+                    <div class="settings-toggle-label">SMS Notifications</div>
+                    <div class="settings-toggle-sub">Requires SMS gateway integration</div>
+                  </div>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="toggle-smsNotifications">
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Platform Info -->
+            <div class="settings-card">
+              <div class="settings-card__header">
+                <div class="settings-card__icon" style="background:var(--gray-100);color:var(--gray-600);">
+                  <i class="fas fa-circle-info"></i>
+                </div>
+                <div class="settings-card__title">Platform Info</div>
+              </div>
+              <div class="settings-card__body">
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Platform Name</label>
+                  <input type="text" class="form-input" value="RoadBuddy" readonly
+                    style="background:var(--gray-50);color:var(--gray-500);cursor:not-allowed;">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Support Email</label>
+                  <input type="email" class="form-input" value="support@roadbuddy.ph" readonly
+                    style="background:var(--gray-50);color:var(--gray-500);cursor:not-allowed;">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label">Current Version</label>
+                  <input type="text" class="form-input" value="v1.0.0 — Phase 5 Build" readonly
+                    style="background:var(--gray-50);color:var(--gray-500);cursor:not-allowed;">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+        <div class="admin-placeholder-content"><i class="fas fa-gear"></i><div>Settings Panel</div><div class="admin-placeholder-sub">Platform configuration and policy management.</div></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===================== MESSAGING PANEL (Phase 2 — Admin Read-only) ===================== -->
+  <div class="msg-overlay" id="msgOverlay" onclick="closeThread()"></div>
+  <div class="msg-panel" id="msgPanel">
+
+    <div class="msg-panel__header">
+      <div class="msg-panel__header-info">
+        <div class="msg-panel__avatar" id="msgPanelInitials">--</div>
+        <div>
+          <div class="msg-panel__name" id="msgPanelName">Conversation</div>
+          <div class="msg-panel__status">
+            <span class="msg-status-dot"></span>
+            <span id="msgPanelLabel">Request Thread</span>
+          </div>
+        </div>
+      </div>
+      <button class="msg-panel__close" onclick="closeThread()" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="msg-panel__context">
+      <i class="fas fa-location-dot"></i>
+      <span class="msg-panel__context-text" id="msgPanelLocation">Location</span>
+      <span class="msg-context-badge msg-context-badge--in-progress" id="msgStatusBadge">En Route</span>
+    </div>
+
+    <div class="msg-panel__body" id="msgBody"></div>
+
+    <!-- Admin always sees locked/read-only bar -->
+    <div class="msg-panel__locked" id="msgLocked" style="display:flex;">
+      <i class="fas fa-eye"></i>
+      <span>Admin view — read-only. Both sides of the conversation are visible.</span>
+    </div>
+
+    <!-- Footer hidden for admin by default; js will keep it hidden -->
+    <div class="msg-panel__footer" id="msgFooter" style="display:none;"></div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/messaging.js"></script>
+  <script src="js/ratings.js"></script>
+  <script src="js/admin-sections.js"></script>
+  <script>
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const icon = document.getElementById('darkModeIcon');
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+      localStorage.setItem('rb-theme', isDark ? 'light' : 'dark');
+    }
+    (function() {
+      const saved = localStorage.getItem('rb-theme');
+      if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        const icon = document.getElementById('darkModeIcon');
+        if (icon) icon.className = 'fas fa-sun';
+      }
+    })();
+
+    // On load: initialise message log stats + sidebar badge
+    window.addEventListener('load', () => {
+      if (typeof RBMessaging === 'undefined') return;
+
+      const threads = RBMessaging.getAllThreads();
+      const totalUnread  = threads.reduce((n, t) => n + t.unread, 0);
+      const totalMessages = threads.reduce((n, t) => n + t.messages.length, 0);
+
+      const el = (id) => document.getElementById(id);
+      if (el('adminMsgTotalThreads'))  el('adminMsgTotalThreads').textContent  = threads.length;
+      if (el('adminMsgTotalUnread'))   el('adminMsgTotalUnread').textContent   = totalUnread;
+      if (el('adminMsgTotalMessages')) el('adminMsgTotalMessages').textContent = totalMessages;
+
+      // Admin sidebar badge
+      const badge = el('adminMsgBadge');
+      if (badge) {
+        if (totalUnread > 0) { badge.textContent = totalUnread; badge.style.display = 'flex'; }
+        else badge.style.display = 'none';
+      }
+    });
+
+    // Render log whenever the messages section becomes visible
+    const _origShowSection = window.showSection;
+    window.showSection = function(sectionId, linkEl) {
+      _origShowSection && _origShowSection(sectionId, linkEl);
+      if (sectionId === 'messages') {
+        setTimeout(() => {
+          if (typeof renderAdminMessageLog !== 'undefined') renderAdminMessageLog();
+        }, 50);
+      }
+    };
+  </script>
+</body>
+</html>

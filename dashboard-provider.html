@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provider Dashboard — Road Buddy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/messaging.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="css/map.css">
+  <link rel="stylesheet" href="css/ratings.css"></head>
+<body>
+
+  <div class="dashboard">
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__header">
+        <a href="index.html" class="navbar__logo">
+          <div class="navbar__logo-icon" style="width: 2rem; height: 2rem; font-size: 1rem;"><i class="fas fa-road"></i></div>
+          <span class="navbar__logo-text" style="color: var(--primary-900); font-size: 1.125rem;">RoadBuddy</span>
+        </a>
+      </div>
+
+      <nav class="sidebar__nav">
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Main</div>
+          <a href="#" class="sidebar__link active">
+            <i class="fas fa-home"></i> Dashboard
+          </a>
+          <a href="#" class="sidebar__link sidebar__link--soon" onclick="return showComingSoon('Incoming Requests list', event)">
+            <i class="fas fa-bell"></i> Incoming Requests
+            <span class="soon-badge">Soon</span>
+          </a>
+          <a href="#" class="sidebar__link sidebar__link--soon" onclick="return showComingSoon('Active Jobs list', event)">
+            <i class="fas fa-list-check"></i> Active Jobs
+            <span class="soon-badge">Soon</span>
+          </a>
+          <a href="#" class="sidebar__link sidebar__link--soon" onclick="return showComingSoon('Job history', event)">
+            <i class="fas fa-clock-rotate-left"></i> Job History
+            <span class="soon-badge">Soon</span>
+          </a>
+        </div>
+
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Communication</div>
+          <a href="#" class="sidebar__link" onclick="return openThread('req-001', 'provider'), false">
+            <i class="fas fa-comments"></i> Messages
+            <span class="msg-sidebar-badge" id="msgUnreadBadge" style="display:none;">1</span>
+          </a>
+          <a href="#" class="sidebar__link sidebar__link--soon" onclick="return showComingSoon('Notifications', event)">
+            <i class="fas fa-bell"></i> Notifications
+            <span class="soon-badge">Soon</span>
+          </a>
+        </div>
+
+        <div class="sidebar__section">
+          <div class="sidebar__section-title">Business</div>
+          <a href="#" class="sidebar__link sidebar__link--soon" onclick="return showComingSoon('Business profile', event)">
+            <i class="fas fa-store"></i> My Profile
+            <span class="soon-badge">Soon</span>
+          </a>
+          <a href="#" class="sidebar__link sidebar__link--soon" onclick="return showComingSoon('Analytics', event)">
+            <i class="fas fa-chart-line"></i> Analytics
+            <span class="soon-badge">Soon</span>
+          </a>
+          <a href="pricing.html" class="sidebar__link">
+            <i class="fas fa-credit-card"></i> Subscription
+          </a>
+          <a href="#" class="sidebar__link sidebar__link--soon" onclick="return showComingSoon('Reviews page', event)">
+            <i class="fas fa-star"></i> Reviews
+            <span class="soon-badge">Soon</span>
+          </a>
+          <a href="#" class="sidebar__link sidebar__link--soon" onclick="return showComingSoon('Settings', event)">
+            <i class="fas fa-gear"></i> Settings
+            <span class="soon-badge">Soon</span>
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar__footer">
+        <div class="sidebar__user">
+          <div class="sidebar__user-avatar" style="background: var(--accent-100); color: var(--accent-600);">JS</div>
+          <div>
+            <div class="sidebar__user-name">Juan Santos</div>
+            <div class="sidebar__user-role">Service Provider</div>
+          </div>
+        </div>
+        <a href="login.html" class="btn btn--ghost btn--sm btn--full" style="margin-top: 0.5rem; justify-content: flex-start; padding-left: 0.75rem;">
+          <i class="fas fa-right-from-bracket"></i> Sign Out
+        </a>
+      </div>
+    </aside>
+
+    <!-- ===================== MAIN CONTENT ===================== -->
+    <main class="dashboard__main">
+      <!-- Top Bar -->
+      <div class="dashboard__topbar">
+        <div class="dashboard__topbar-left">
+          <button class="btn btn--ghost btn--icon" id="sidebarToggle" style="display: none;">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1 class="dashboard__topbar-title">Provider Dashboard</h1>
+          <span class="badge badge--success" style="font-size: 0.6875rem;">
+            <i class="fas fa-circle" style="font-size: 0.375rem;"></i> Available
+          </span>
+        </div>
+        <div class="dashboard__topbar-right">
+          <div class="topbar__search">
+            <i class="fas fa-search topbar__search-icon"></i>
+            <input type="text" class="topbar__search-input" placeholder="Search requests...">
+          </div>
+          <button class="topbar__notification" onclick="showComingSoon('Notifications')">
+            <i class="fas fa-bell"></i>
+            <span class="topbar__notification-badge"></span>
+          </button>
+          <button class="dark-mode-toggle" id="darkModeToggle" title="Toggle dark mode" onclick="toggleDarkMode()">
+            <i class="fas fa-moon" id="darkModeIcon"></i>
+          </button>
+          <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.75rem; background: var(--gray-50); border-radius: var(--radius-full); font-size: 0.8125rem;">
+            <i class="fas fa-location-dot" style="color: var(--primary-500);"></i>
+            <span style="color: var(--gray-600); font-weight: 500;">Cagayan de Oro City</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard__content">
+        <!-- Subscription Status Banner -->
+        <div class="subscription-card" style="margin-bottom: 1.5rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; position: relative; z-index: 2;">
+            <div>
+              <div class="subscription-card__plan"><i class="fas fa-bolt" style="color: var(--accent-400);"></i> Professional Plan</div>
+              <div class="subscription-card__status">
+                <i class="fas fa-circle" style="font-size: 0.375rem;"></i> Active Subscription
+              </div>
+            </div>
+            <div class="subscription-card__details">
+              <div>
+                <div class="subscription-card__detail-label">Current Period</div>
+                <div class="subscription-card__detail-value">Feb 1 – Mar 1, 2026</div>
+              </div>
+              <div>
+                <div class="subscription-card__detail-label">Days Remaining</div>
+                <div class="subscription-card__detail-value">17 days</div>
+              </div>
+              <a href="pricing.html" class="btn btn--accent btn--sm">
+                <i class="fas fa-crown"></i> Manage Plan
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card__icon" style="background: var(--primary-100); color: var(--primary-500);">
+              <i class="fas fa-bell"></i>
+            </div>
+            <div>
+              <div class="stat-card__value">5</div>
+              <div class="stat-card__label">New Requests</div>
+              <div class="stat-card__change stat-card__change--up">
+                <i class="fas fa-arrow-up"></i> Awaiting response
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card__icon" style="background: var(--accent-100); color: var(--accent-600);">
+              <i class="fas fa-wrench"></i>
+            </div>
+            <div>
+              <div class="stat-card__value">2</div>
+              <div class="stat-card__label">Active Jobs</div>
+              <div class="stat-card__change" style="color: var(--primary-500);">
+                <i class="fas fa-spinner"></i> Currently en route
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card__icon" style="background: var(--success-100); color: var(--success-600);">
+              <i class="fas fa-circle-check"></i>
+            </div>
+            <div>
+              <div class="stat-card__value">87</div>
+              <div class="stat-card__label">Completed Jobs</div>
+              <div class="stat-card__change stat-card__change--up">
+                <i class="fas fa-arrow-up"></i> +12 this month
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card__icon" style="background: var(--accent-100); color: var(--accent-600);">
+              <i class="fas fa-star"></i>
+            </div>
+            <div>
+              <div class="stat-card__value">4.8</div>
+              <div class="stat-card__label">Average Rating</div>
+              <div class="stat-card__change" style="color: var(--accent-600);">
+                <i class="fas fa-star" style="font-size: 0.625rem;"></i> 62 total reviews
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Provider Map Section (Phase 3) ── -->
+        <div class="map-wrapper" id="providerMapWrapper">
+          <div class="provider-map-section">
+
+            <div class="dashboard-map__header">
+              <div class="dashboard-map__title">
+                <i class="fas fa-map-location-dot" style="color:var(--primary-500);margin-right:0.5rem;"></i>
+                Active Jobs Map
+              </div>
+              <div style="display:flex;align-items:center;gap:0.625rem;">
+                <span class="map-gps-indicator" id="provGPSIndicator">
+                  <i class="fas fa-location-crosshairs"></i> Seeded position
+                </span>
+                <button class="btn btn--ghost btn--sm" id="provMapExpandBtn"
+                  onclick="toggleMapFullscreen('providerMap')">
+                  <i class="fas fa-expand"></i> Expand
+                </button>
+              </div>
+            </div>
+
+            <div class="dashboard-map__body">
+              <div id="providerMap"></div>
+            </div>
+
+            <!-- Legend -->
+            <div class="provider-map-legend">
+              <div class="provider-map-legend-item">
+                <div class="legend-dot" style="background:var(--primary-500);"></div>
+                Your Location
+              </div>
+              <div class="provider-map-legend-item">
+                <div class="legend-dot" style="background:#ef4444;"></div>
+                Maria Reyes — Flat Tire
+              </div>
+              <div class="provider-map-legend-item">
+                <div class="legend-dot" style="background:#f97316;"></div>
+                Roberto Garcia — Battery Jump
+              </div>
+              <div class="provider-map-legend-item" style="margin-left:auto;font-style:italic;color:var(--gray-400);">
+                <i class="fas fa-info-circle"></i>&nbsp; Click a pin for details
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Incoming Requests + Active Jobs -->
+        <div class="dashboard-grid-2">
+          <!-- Incoming Requests -->
+          <div class="request-card">
+            <div class="request-card__header">
+              <div class="request-card__title">
+                <i class="fas fa-bell" style="color: var(--accent-500); margin-right: 0.375rem;"></i> Incoming Requests
+              </div>
+              <span class="badge badge--accent" style="font-size: 0.6875rem;">5 new</span>
+            </div>
+            <div class="request-card__body">
+              <div class="request-item" style="cursor: pointer;">
+                <div class="request-item__icon" style="background: var(--danger-100); color: var(--danger-600);">
+                  <i class="fas fa-triangle-exclamation"></i>
+                </div>
+                <div class="request-item__info">
+                  <div class="request-item__title">Engine Won't Start</div>
+                  <div class="request-item__meta"><i class="fas fa-location-dot"></i> 0.8 km away · 2 min ago</div>
+                </div>
+                <div style="display: flex; gap: 0.375rem;">
+                  <button class="btn btn--primary btn--sm" style="padding: 0.375rem 0.75rem; font-size: 0.75rem;" onclick="showComingSoon('Job acceptance')">Accept</button>
+                  <button class="btn btn--ghost btn--sm" style="padding: 0.375rem 0.75rem; font-size: 0.75rem;" onclick="showComingSoon('Job decline')">Decline</button>
+                </div>
+              </div>
+
+              <div class="request-item" style="cursor: pointer;">
+                <div class="request-item__icon" style="background: var(--accent-100); color: var(--accent-600);">
+                  <i class="fas fa-car-burst"></i>
+                </div>
+                <div class="request-item__info">
+                  <div class="request-item__title">Flat Tire — Urgent</div>
+                  <div class="request-item__meta"><i class="fas fa-location-dot"></i> 1.5 km away · 5 min ago</div>
+                </div>
+                <div style="display: flex; gap: 0.375rem;">
+                  <button class="btn btn--primary btn--sm" style="padding: 0.375rem 0.75rem; font-size: 0.75rem;" onclick="showComingSoon('Job acceptance')">Accept</button>
+                  <button class="btn btn--ghost btn--sm" style="padding: 0.375rem 0.75rem; font-size: 0.75rem;" onclick="showComingSoon('Job decline')">Decline</button>
+                </div>
+              </div>
+
+              <div class="request-item" style="cursor: pointer;">
+                <div class="request-item__icon" style="background: var(--primary-100); color: var(--primary-600);">
+                  <i class="fas fa-battery-empty"></i>
+                </div>
+                <div class="request-item__info">
+                  <div class="request-item__title">Dead Battery — Jump Start</div>
+                  <div class="request-item__meta"><i class="fas fa-location-dot"></i> 2.1 km away · 8 min ago</div>
+                </div>
+                <div style="display: flex; gap: 0.375rem;">
+                  <button class="btn btn--primary btn--sm" style="padding: 0.375rem 0.75rem; font-size: 0.75rem;" onclick="showComingSoon('Job acceptance')">Accept</button>
+                  <button class="btn btn--ghost btn--sm" style="padding: 0.375rem 0.75rem; font-size: 0.75rem;" onclick="showComingSoon('Job decline')">Decline</button>
+                </div>
+              </div>
+
+              <div class="request-item" style="cursor: pointer;">
+                <div class="request-item__icon" style="background: var(--gray-100); color: var(--gray-600);">
+                  <i class="fas fa-oil-can"></i>
+                </div>
+                <div class="request-item__info">
+                  <div class="request-item__title">Oil Leak — Need Parts</div>
+                  <div class="request-item__meta"><i class="fas fa-location-dot"></i> 3.4 km away · 12 min ago</div>
+                </div>
+                <div style="display: flex; gap: 0.375rem;">
+                  <button class="btn btn--primary btn--sm" style="padding: 0.375rem 0.75rem; font-size: 0.75rem;" onclick="showComingSoon('Job acceptance')">Accept</button>
+                  <button class="btn btn--ghost btn--sm" style="padding: 0.375rem 0.75rem; font-size: 0.75rem;" onclick="showComingSoon('Job decline')">Decline</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active Jobs -->
+          <div class="request-card">
+            <div class="request-card__header">
+              <div class="request-card__title">
+                <i class="fas fa-wrench" style="color: var(--primary-500); margin-right: 0.375rem;"></i> Active Jobs
+              </div>
+              <span class="badge badge--primary" style="font-size: 0.6875rem;">2 active</span>
+            </div>
+            <div class="request-card__body">
+              <!-- Active Job 1 -->
+              <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-100);">
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.75rem;">
+                  <div>
+                    <div style="font-weight: 600; font-size: 0.9375rem; color: var(--gray-900);">Flat Tire Replacement</div>
+                    <div style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.125rem;">
+                      <i class="fas fa-user" style="font-size: 0.625rem;"></i> Maria Reyes · Toyota Vios 2022
+                    </div>
+                    <div style="font-size: 0.8125rem; color: var(--gray-500);">
+                      <i class="fas fa-location-dot" style="font-size: 0.625rem;"></i> Limketkai Dr., Brgy. Carmen, Cagayan de Oro City
+                    </div>
+                  </div>
+                  <span class="status--in-progress" style="padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600;">En Route</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                  <button class="btn btn--primary btn--sm" onclick="showComingSoon('Job status updates')" style="flex: 1; font-size: 0.8125rem;">
+                    <i class="fas fa-location-arrow"></i> Update Status
+                  </button>
+                  <button class="btn btn--ghost btn--sm" style="font-size: 0.8125rem;" onclick="openThread('req-001', 'provider')" title="Message Maria Reyes">
+                    <i class="fas fa-comments"></i>
+                  </button>
+                  <button class="btn btn--ghost btn--sm" style="font-size: 0.8125rem;" onclick="showComingSoon('Click-to-call')">
+                    <i class="fas fa-phone"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Active Job 2 -->
+              <div style="padding: 1.25rem 1.5rem;">
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.75rem;">
+                  <div>
+                    <div style="font-weight: 600; font-size: 0.9375rem; color: var(--gray-900);">Battery Jump Start</div>
+                    <div style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.125rem;">
+                      <i class="fas fa-user" style="font-size: 0.625rem;"></i> Roberto Garcia · Honda City 2020
+                    </div>
+                    <div style="font-size: 0.8125rem; color: var(--gray-500);">
+                      <i class="fas fa-location-dot" style="font-size: 0.625rem;"></i> Kauswagan Road, Cagayan de Oro City
+                    </div>
+                  </div>
+                  <span class="status--pending" style="padding: 0.25rem 0.75rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 600;">Accepted</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                  <button class="btn btn--accent btn--sm" onclick="showComingSoon('Job status updates')" style="flex: 1; font-size: 0.8125rem;">
+                    <i class="fas fa-truck-fast"></i> Start Route
+                  </button>
+                  <button class="btn btn--ghost btn--sm" style="font-size: 0.8125rem;" onclick="openThread('req-002', 'provider')" title="Message Roberto Garcia">
+                    <i class="fas fa-comments"></i>
+                  </button>
+                  <button class="btn btn--ghost btn--sm" style="font-size: 0.8125rem;" onclick="showComingSoon('Click-to-call')">
+                    <i class="fas fa-phone"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Completed + Reviews Row -->
+        <div class="dashboard-grid-2-wide">
+          <!-- Completed Jobs -->
+          <div class="request-card">
+            <div class="request-card__header">
+              <div class="request-card__title">
+                <i class="fas fa-circle-check" style="color: var(--success-500); margin-right: 0.375rem;"></i> Recent Completed Jobs
+              </div>
+              <a href="#" class="btn btn--ghost btn--sm" onclick="return showComingSoon('Job history', event)">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="request-card__body">
+              <div class="request-item">
+                <div class="request-item__icon" style="background: var(--success-100); color: var(--success-600);">
+                  <i class="fas fa-circle-check"></i>
+                </div>
+                <div class="request-item__info">
+                  <div class="request-item__title">Towing — Engine Failure</div>
+                  <div class="request-item__meta">Feb 10, 2026 · Angela Cruz · Brgy. Balulang, CDO</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.25rem; color: var(--accent-400); font-size: 0.75rem;">
+                  <i class="fas fa-star"></i> 5.0
+                </div>
+              </div>
+
+              <div class="request-item">
+                <div class="request-item__icon" style="background: var(--success-100); color: var(--success-600);">
+                  <i class="fas fa-circle-check"></i>
+                </div>
+                <div class="request-item__info">
+                  <div class="request-item__title">Flat Tire Change</div>
+                  <div class="request-item__meta">Feb 9, 2026 · Mark Tan · Brgy. Balubal, CDO</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.25rem; color: var(--accent-400); font-size: 0.75rem;">
+                  <i class="fas fa-star"></i> 4.5
+                </div>
+              </div>
+
+              <div class="request-item">
+                <div class="request-item__icon" style="background: var(--success-100); color: var(--success-600);">
+                  <i class="fas fa-circle-check"></i>
+                </div>
+                <div class="request-item__info">
+                  <div class="request-item__title">Battery Replacement</div>
+                  <div class="request-item__meta">Feb 7, 2026 · Lisa Gomez · QC</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.25rem; color: var(--accent-400); font-size: 0.75rem;">
+                  <i class="fas fa-star"></i> 5.0
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Latest Reviews (Phase 4 — live data) -->
+          <div class="card" style="padding: 0; border: 1px solid var(--gray-200);">
+            <div style="padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; justify-content: space-between;">
+              <h3 style="font-family: var(--font-display); font-weight: 600; font-size: 1.0625rem; color: var(--gray-900);">
+                <i class="fas fa-star" style="color: var(--accent-400); margin-right: 0.375rem;"></i> Latest Reviews
+              </h3>
+              <a href="#" class="btn btn--ghost btn--sm" onclick="return showComingSoon('Full reviews page', event)">View All</a>
+            </div>
+
+            <!-- Live average rating bar -->
+            <div class="provider-avg-rating">
+              <span class="provider-avg-rating__score" id="providerAvgRating">4.8</span>
+              <div class="provider-avg-rating__detail">
+                <span style="color:var(--accent-400);font-size:0.875rem;">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i><i class="fas fa-star-half-stroke"></i>
+                </span>
+                <span class="provider-avg-rating__count" id="providerReviewCount">Loading…</span>
+              </div>
+            </div>
+
+            <!-- Review list — populated by ratings.js renderProviderReviews() -->
+            <div style="padding: 0.25rem 1.5rem 1.25rem;" id="providerReviewsList">
+              <div style="padding: 1rem 0; color: var(--gray-400); font-size: 0.875rem; text-align: center;">
+                <i class="fas fa-spinner fa-spin"></i> Loading reviews…
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ===================== MESSAGING PANEL (Phase 2) ===================== -->
+  <div class="msg-overlay" id="msgOverlay" onclick="closeThread()"></div>
+  <div class="msg-panel" id="msgPanel">
+
+    <div class="msg-panel__header">
+      <div class="msg-panel__header-info">
+        <div class="msg-panel__avatar" id="msgPanelInitials">MR</div>
+        <div>
+          <div class="msg-panel__name" id="msgPanelName">Motorist</div>
+          <div class="msg-panel__status">
+            <span class="msg-status-dot"></span>
+            <span id="msgPanelLabel">Active Request</span>
+          </div>
+        </div>
+      </div>
+      <button class="msg-panel__close" onclick="closeThread()" aria-label="Close messages">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="msg-panel__context">
+      <i class="fas fa-location-dot"></i>
+      <span class="msg-panel__context-text" id="msgPanelLocation">Location</span>
+      <span class="msg-context-badge msg-context-badge--in-progress" id="msgStatusBadge">En Route</span>
+    </div>
+
+    <div class="msg-panel__body" id="msgBody"></div>
+
+    <div class="msg-panel__locked" id="msgLocked" style="display:none;">
+      <i class="fas fa-lock"></i>
+      <span>Request completed — this thread is now read-only.</span>
+    </div>
+
+    <div class="msg-panel__footer" id="msgFooter">
+      <div class="msg-input-wrapper">
+        <textarea
+          class="msg-input"
+          id="msgInput"
+          placeholder="Type a message..."
+          rows="1"
+          onkeydown="handleMsgKeydown(event)"
+          oninput="this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,120)+'px'"
+        ></textarea>
+        <button class="msg-send-btn" onclick="sendCurrentMessage()" aria-label="Send message">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+      <div class="msg-input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line</div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/messaging.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/ratings.js"></script>
+  <script>
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const icon = document.getElementById('darkModeIcon');
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+      localStorage.setItem('rb-theme', isDark ? 'light' : 'dark');
+    }
+    (function() {
+      const saved = localStorage.getItem('rb-theme');
+      if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        const icon = document.getElementById('darkModeIcon');
+        if (icon) icon.className = 'fas fa-sun';
+      }
+    })();
+    window.addEventListener('load', () => {
+      if (typeof RBMessaging !== 'undefined') RBMessaging.refreshBadge();
+    });
+  </script>
+</body>
+</html>

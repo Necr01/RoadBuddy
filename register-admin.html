@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Registration — Road Buddy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <div class="auth admin-auth">
+    <!-- === Left Sidebar === -->
+    <div class="auth__sidebar admin-auth__sidebar">
+      <div class="auth__sidebar-content">
+        <a href="index.html" class="navbar__logo" style="margin-bottom: 2.5rem;">
+          <div class="navbar__logo-icon"><i class="fas fa-road"></i></div>
+          <span class="navbar__logo-text">RoadBuddy</span>
+        </a>
+
+        <div class="admin-portal-badge">
+          <i class="fas fa-shield-halved"></i>
+          <span>Administration Portal</span>
+        </div>
+
+        <h2 class="auth__sidebar-title" style="margin-top: 1.5rem;">Create an Admin Account</h2>
+        <p class="auth__sidebar-text">Admin accounts are invite-only and require a valid invitation code issued by a super-administrator.</p>
+
+        <div class="auth__sidebar-features" style="margin-top: 2rem;">
+          <div class="auth__sidebar-feature">
+            <i class="fas fa-envelope-open-text"></i>
+            <span>Invitation code required to register</span>
+          </div>
+          <div class="auth__sidebar-feature">
+            <i class="fas fa-id-badge"></i>
+            <span>Role-based access control built-in</span>
+          </div>
+          <div class="auth__sidebar-feature">
+            <i class="fas fa-mobile-screen-button"></i>
+            <span>2FA enrollment required after setup</span>
+          </div>
+          <div class="auth__sidebar-feature">
+            <i class="fas fa-file-shield"></i>
+            <span>All actions are fully audit-logged</span>
+          </div>
+        </div>
+
+        <!-- Admin Role Levels -->
+        <div style="margin-top: 2.5rem;">
+          <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; color: var(--primary-400); margin-bottom: 1rem;">Admin Role Levels</div>
+          <div class="admin-role-level">
+            <div class="admin-role-level__dot" style="background: var(--admin-accent);"></div>
+            <div>
+              <div style="font-size: 0.8125rem; font-weight: 600; color: var(--white);">Super Admin</div>
+              <div style="font-size: 0.75rem; color: var(--primary-400);">Full system access & admin management</div>
+            </div>
+          </div>
+          <div class="admin-role-level">
+            <div class="admin-role-level__dot" style="background: var(--primary-300);"></div>
+            <div>
+              <div style="font-size: 0.8125rem; font-weight: 600; color: var(--white);">Moderator Admin</div>
+              <div style="font-size: 0.75rem; color: var(--primary-400);">User & provider management, moderation</div>
+            </div>
+          </div>
+          <div class="admin-role-level">
+            <div class="admin-role-level__dot" style="background: var(--primary-500);"></div>
+            <div>
+              <div style="font-size: 0.8125rem; font-weight: 600; color: var(--white);">Support Admin</div>
+              <div style="font-size: 0.75rem; color: var(--primary-400);">View-only, dispute & ticket handling</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- === Right Form === -->
+    <div class="auth__main">
+      <div class="auth__form-container">
+        <a href="login-admin.html" class="btn btn--ghost btn--sm" style="margin-bottom: 1.5rem;">
+          <i class="fas fa-arrow-left"></i> Back to Admin Login
+        </a>
+
+        <div class="auth__header">
+          <div class="admin-form-icon">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h1 class="auth__title" style="margin-top: 1rem;">Register Admin Account</h1>
+          <p class="auth__subtitle">Already have an admin account? <a href="login-admin.html">Sign in here</a></p>
+        </div>
+
+        <!-- Invitation Code Banner -->
+        <div class="admin-invite-banner">
+          <i class="fas fa-envelope-open-text"></i>
+          <div>
+            <div style="font-weight: 600; font-size: 0.875rem; color: var(--admin-dark);">Invitation Required</div>
+            <div style="font-size: 0.8125rem; color: var(--gray-600); margin-top: 0.125rem;">You must have a valid invitation code to create an admin account. Contact your super administrator.</div>
+          </div>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="adminRegisterForm" onsubmit="return handleAdminRegister(event)">
+
+          <!-- Invitation Code -->
+          <div class="form-group">
+            <label class="form-label" for="inviteCode">
+              Invitation Code <span style="color: var(--danger-500);">*</span>
+            </label>
+            <div class="form-input-wrapper">
+              <i class="fas fa-key form-input-icon" style="color: var(--admin-primary);"></i>
+              <input type="text" id="inviteCode" class="form-input form-input--icon admin-invite-input" placeholder="XXXX-XXXX-XXXX" required maxlength="14" oninput="formatInviteCode(this)">
+              <button type="button" class="form-input-action" id="verifyCodeBtn" onclick="verifyInviteCode()" style="width: auto; padding: 0 0.75rem; font-size: 0.75rem; font-weight: 600; color: var(--admin-primary);">
+                Verify
+              </button>
+            </div>
+            <div id="inviteCodeStatus" class="admin-code-status"></div>
+          </div>
+
+          <!-- Name Row -->
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="adminFirstName">First Name</label>
+              <input type="text" id="adminFirstName" class="form-input" placeholder="Juan" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="adminLastName">Last Name</label>
+              <input type="text" id="adminLastName" class="form-input" placeholder="Dela Cruz" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="adminRegEmail">Official Email Address</label>
+            <div class="form-input-wrapper">
+              <i class="fas fa-envelope form-input-icon"></i>
+              <input type="email" id="adminRegEmail" class="form-input form-input--icon" placeholder="admin@roadbuddy.ph" required>
+            </div>
+            <div class="form-hint"><i class="fas fa-info-circle"></i> Use your official RoadBuddy admin email address.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="adminPhone">Contact Number</label>
+            <div class="form-input-wrapper">
+              <i class="fas fa-phone form-input-icon"></i>
+              <input type="tel" id="adminPhone" class="form-input form-input--icon" placeholder="+63 9XX XXX XXXX" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="adminRole">Admin Role</label>
+            <select id="adminRole" class="form-select" required>
+              <option value="">Select your assigned role</option>
+              <option value="super">Super Admin</option>
+              <option value="moderator">Moderator Admin</option>
+              <option value="support">Support Admin</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="adminDept">Department / Team</label>
+            <div class="form-input-wrapper">
+              <i class="fas fa-building form-input-icon"></i>
+              <input type="text" id="adminDept" class="form-input form-input--icon" placeholder="e.g., Operations, Support, Engineering" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="adminRegPassword">Create Password</label>
+            <div class="form-input-wrapper">
+              <i class="fas fa-lock form-input-icon"></i>
+              <input type="password" id="adminRegPassword" class="form-input form-input--icon" placeholder="Min. 12 characters recommended" required oninput="checkPasswordStrength(this.value)">
+              <button type="button" class="form-input-action" onclick="togglePassword('adminRegPassword', this)" aria-label="Show password">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <div class="password-strength" id="passwordStrength">
+              <div class="password-strength__bar" id="str1"></div>
+              <div class="password-strength__bar" id="str2"></div>
+              <div class="password-strength__bar" id="str3"></div>
+              <div class="password-strength__bar" id="str4"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="adminConfirmPassword">Confirm Password</label>
+            <div class="form-input-wrapper">
+              <i class="fas fa-lock form-input-icon"></i>
+              <input type="password" id="adminConfirmPassword" class="form-input form-input--icon" placeholder="Repeat your password" required>
+            </div>
+          </div>
+
+          <!-- 2FA Setup Note -->
+          <div class="admin-2fa-setup-note">
+            <div class="admin-2fa-setup-note__icon">
+              <i class="fas fa-mobile-screen-button"></i>
+            </div>
+            <div>
+              <div style="font-size: 0.875rem; font-weight: 600; color: var(--gray-900);">Two-Factor Authentication Setup</div>
+              <div style="font-size: 0.8125rem; color: var(--gray-500); margin-top: 0.25rem; line-height: 1.5;">You'll be required to set up 2FA using an authenticator app after completing registration. This is mandatory for all admin accounts.</div>
+            </div>
+          </div>
+
+          <!-- Terms -->
+          <div class="form-group">
+            <label class="form-check">
+              <input type="checkbox" class="form-checkbox" id="adminAgreeTerms" required>
+              <span class="form-check-label">I acknowledge the <a href="#">Admin Code of Conduct</a>, <a href="#">Terms of Service</a>, and <a href="#">Privacy Policy</a></span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--full btn--lg admin-login-btn" id="adminRegisterBtn">
+            <i class="fas fa-user-shield"></i> Create Admin Account
+          </button>
+        </form>
+
+        <p class="text-center text-sm text-muted" style="margin-top: 1.5rem; font-size: 0.75rem;">
+          <i class="fas fa-shield-halved" style="color: var(--admin-primary);"></i>
+          Admin account creation requires super-admin approval before access is granted.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="toast toast--success" id="adminRegisterToast">
+    <div class="toast__icon"><i class="fas fa-check"></i></div>
+    <div class="toast__text">Admin account created! Awaiting super-admin approval...</div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Road Buddy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <div class="auth admin-auth">
+    <!-- === Left Sidebar === -->
+    <div class="auth__sidebar admin-auth__sidebar">
+      <div class="auth__sidebar-content">
+        <a href="index.html" class="navbar__logo" style="margin-bottom: 2.5rem;">
+          <div class="navbar__logo-icon"><i class="fas fa-road"></i></div>
+          <span class="navbar__logo-text">RoadBuddy</span>
+        </a>
+
+        <!-- Admin Badge -->
+        <div class="admin-portal-badge">
+          <i class="fas fa-shield-halved"></i>
+          <span>Administration Portal</span>
+        </div>
+
+        <h2 class="auth__sidebar-title" style="margin-top: 1.5rem;">System Control Center</h2>
+        <p class="auth__sidebar-text">Secure access to the RoadBuddy admin panel. Manage providers, motorists, subscriptions, and platform analytics from one place.</p>
+
+        <div class="auth__sidebar-features" style="margin-top: 2rem;">
+          <div class="auth__sidebar-feature">
+            <i class="fas fa-users-gear"></i>
+            <span>User & provider management</span>
+          </div>
+          <div class="auth__sidebar-feature">
+            <i class="fas fa-circle-check"></i>
+            <span>Provider verification & approval</span>
+          </div>
+          <div class="auth__sidebar-feature">
+            <i class="fas fa-credit-card"></i>
+            <span>Subscription & billing oversight</span>
+          </div>
+          <div class="auth__sidebar-feature">
+            <i class="fas fa-chart-line"></i>
+            <span>Platform analytics & reports</span>
+          </div>
+          <div class="auth__sidebar-feature">
+            <i class="fas fa-flag"></i>
+            <span>Dispute resolution & moderation</span>
+          </div>
+        </div>
+
+        <!-- Security Notice -->
+        <div class="admin-security-notice">
+          <i class="fas fa-lock"></i>
+          <div>
+            <div style="font-size: 0.8125rem; font-weight: 600; color: var(--white); margin-bottom: 0.125rem;">Restricted Access</div>
+            <div style="font-size: 0.75rem; color: var(--primary-300); line-height: 1.5;">This portal is for authorized RoadBuddy administrators only. Unauthorized access attempts are logged and monitored.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- === Right Form === -->
+    <div class="auth__main">
+      <div class="auth__form-container">
+        <!-- Back to Home -->
+        <a href="index.html" class="btn btn--ghost btn--sm" style="margin-bottom: 1.5rem;">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <div class="auth__header">
+          <!-- Admin icon header -->
+          <div class="admin-form-icon">
+            <i class="fas fa-shield-halved"></i>
+          </div>
+          <h1 class="auth__title" style="margin-top: 1rem;">Admin Sign In</h1>
+          <p class="auth__subtitle">Access restricted to authorized administrators</p>
+        </div>
+
+        <!-- Admin Login Form -->
+        <form id="adminLoginForm" onsubmit="return handleAdminLogin(event)">
+          <div class="form-group">
+            <label class="form-label" for="adminEmail">Admin Email Address</label>
+            <div class="form-input-wrapper">
+              <i class="fas fa-envelope form-input-icon"></i>
+              <input type="email" id="adminEmail" class="form-input form-input--icon" placeholder="admin@roadbuddy.ph" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="adminPassword">Password</label>
+            <div class="form-input-wrapper">
+              <i class="fas fa-lock form-input-icon"></i>
+              <input type="password" id="adminPassword" class="form-input form-input--icon" placeholder="Enter admin password" required>
+              <button type="button" class="form-input-action" onclick="togglePassword('adminPassword', this)" aria-label="Show password">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2FA Notice -->
+          <div class="admin-2fa-notice">
+            <i class="fas fa-mobile-screen-button"></i>
+            <span>Two-factor authentication may be required for admin access.</span>
+          </div>
+
+          <div class="form-help" style="margin-top: 0.75rem;">
+            <label class="form-check">
+              <input type="checkbox" class="form-checkbox">
+              <span class="form-check-label">Keep me signed in on this device</span>
+            </label>
+            <a href="#" class="form-forgot" onclick="return showComingSoon('Password reset', event)">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn--full btn--lg admin-login-btn" id="adminLoginBtn">
+            <i class="fas fa-shield-halved"></i> Sign In to Admin Panel
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="form-divider">not an admin?</div>
+
+        <!-- Role Links -->
+        <div class="admin-role-links">
+          <a href="login.html" class="admin-role-link">
+            <i class="fas fa-car"></i>
+            <span>Motorist Login</span>
+            <i class="fas fa-arrow-right" style="margin-left: auto; font-size: 0.75rem; opacity: 0.5;"></i>
+          </a>
+          <a href="login.html" class="admin-role-link">
+            <i class="fas fa-wrench"></i>
+            <span>Provider Login</span>
+            <i class="fas fa-arrow-right" style="margin-left: auto; font-size: 0.75rem; opacity: 0.5;"></i>
+          </a>
+        </div>
+
+        <p class="text-center text-sm text-muted" style="margin-top: 1.5rem; font-size: 0.75rem;">
+          <i class="fas fa-shield-halved" style="color: var(--admin-primary);"></i>
+          All admin sessions are encrypted and logged for security compliance.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast toast--success" id="adminLoginToast">
+    <div class="toast__icon"><i class="fas fa-shield-halved"></i></div>
+    <div class="toast__text">Admin access granted. Redirecting to control panel...</div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

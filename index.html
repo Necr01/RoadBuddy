@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Road Buddy — Roadside Assistance for Philippine Motorists</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="index.html" class="navbar__logo">
+          <div class="navbar__logo-icon"><i class="fas fa-road"></i></div>
+          <span class="navbar__logo-text">RoadBuddy</span>
+        </a>
+
+        <div class="navbar__nav">
+          <a href="#features" class="navbar__link">Features</a>
+          <a href="#how-it-works" class="navbar__link">How It Works</a>
+          <a href="#pricing" class="navbar__link">Pricing</a>
+          <a href="#comparison" class="navbar__link">Compare</a>
+          <a href="#testimonials" class="navbar__link">Reviews</a>
+        </div>
+
+        <div class="navbar__actions">
+          <a href="login.html" class="btn btn--outline-white btn--sm">Log In</a>
+          <a href="register.html" class="btn btn--accent btn--sm">Get Started</a>
+        </div>
+
+        <button class="navbar__mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav__panel">
+      <button class="btn btn--ghost" id="mobileClose" style="margin-bottom: 1rem;">
+        <i class="fas fa-times"></i> Close
+      </button>
+      <a href="#features" class="mobile-nav__link">Features</a>
+      <a href="#how-it-works" class="mobile-nav__link">How It Works</a>
+      <a href="#pricing" class="mobile-nav__link">Pricing</a>
+      <a href="#comparison" class="mobile-nav__link">Compare</a>
+      <a href="#testimonials" class="mobile-nav__link">Reviews</a>
+      <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <a href="login.html" class="btn btn--outline btn--full">Log In</a>
+        <a href="register.html" class="btn btn--primary btn--full">Get Started</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero__content">
+        <!-- Left: Text -->
+        <div class="hero__text animate-fadeInUp">
+          <span class="badge badge--dark"><i class="fas fa-bolt"></i> Roadside Help, Reimagined</span>
+          <h1 class="hero__title">
+            Get Roadside Assistance <span>Anywhere in the Philippines</span>
+          </h1>
+          <p class="hero__subtitle">
+            Instantly connect with verified mechanics, towing services, and auto parts suppliers near you. No more guesswork — just fast, reliable vehicle support when you need it most.
+          </p>
+          <div class="hero__actions">
+            <a href="register.html" class="btn btn--accent btn--lg">
+              <i class="fas fa-location-dot"></i> Request Assistance
+            </a>
+            <a href="#how-it-works" class="btn btn--outline-white btn--lg">
+              Learn More <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+          <div class="hero__stats">
+            <div class="hero__stat">
+              <div class="hero__stat-value">500+</div>
+              <div class="hero__stat-label">Verified Providers</div>
+            </div>
+            <div class="hero__stat">
+              <div class="hero__stat-value">24/7</div>
+              <div class="hero__stat-label">Available Support</div>
+            </div>
+            <div class="hero__stat">
+              <div class="hero__stat-value">15 min</div>
+              <div class="hero__stat-label">Avg. Response Time</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Map Visual -->
+        <div class="hero__visual animate-fadeInUp animate-delay-2">
+          <div class="hero__map-card">
+            <div class="hero__map-inner">
+              <!-- Simulated Roads -->
+              <div class="map-road map-road--h1"></div>
+              <div class="map-road map-road--h2"></div>
+              <div class="map-road map-road--v1"></div>
+              <div class="map-road map-road--v2"></div>
+              <div class="map-road map-road--v3"></div>
+
+              <!-- Map Pins -->
+              <div class="map-pin map-pin--user map-pin--1">
+                <div class="map-pin__dot"><i class="fas fa-user"></i></div>
+                <div class="map-pin__pulse"></div>
+                <div class="map-pin__label">You</div>
+              </div>
+              <div class="map-pin map-pin--provider map-pin--2">
+                <div class="map-pin__dot"><i class="fas fa-wrench"></i></div>
+                <div class="map-pin__pulse"></div>
+                <div class="map-pin__label">AutoFix Shop — 1.2 km</div>
+              </div>
+              <div class="map-pin map-pin--provider2 map-pin--3">
+                <div class="map-pin__dot"><i class="fas fa-truck-pickup"></i></div>
+                <div class="map-pin__pulse"></div>
+                <div class="map-pin__label">Quick Tow — 2.8 km</div>
+              </div>
+              <div class="map-pin map-pin--provider map-pin--4">
+                <div class="map-pin__dot"><i class="fas fa-cog"></i></div>
+                <div class="map-pin__pulse"></div>
+                <div class="map-pin__label">Parts Hub — 1.9 km</div>
+              </div>
+
+              <!-- Floating Notification -->
+              <div class="hero__notification">
+                <div class="hero__notification-icon">
+                  <i class="fas fa-check"></i>
+                </div>
+                <div class="hero__notification-text">
+                  <div class="hero__notification-title">Provider Matched!</div>
+                  <div class="hero__notification-sub">AutoFix Shop is on the way</div>
+                </div>
+                <div class="hero__notification-time">Just now</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TRUSTED BY ===================== -->
+  <section class="trusted">
+    <div class="container">
+      <div class="trusted__label">Designed for the Philippine Automotive Community</div>
+      <div class="trusted__logos">
+        <span class="trusted__logo"><i class="fas fa-car"></i> AutoPH</span>
+        <span class="trusted__logo"><i class="fas fa-shield-halved"></i> DriveSecure</span>
+        <span class="trusted__logo"><i class="fas fa-map-location-dot"></i> PinoyRoad</span>
+        <span class="trusted__logo"><i class="fas fa-gear"></i> FixNow</span>
+        <span class="trusted__logo"><i class="fas fa-truck-fast"></i> TowLine</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FEATURES ===================== -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge--primary"><i class="fas fa-sparkles"></i> Platform Features</span>
+        <h2 class="heading-lg">Everything You Need When Your Vehicle Breaks Down</h2>
+        <p>From finding the nearest mechanic to tracking their arrival, Road Buddy provides a complete roadside assistance experience built for Filipino motorists.</p>
+      </div>
+
+      <div class="features__grid">
+        <!-- Feature 1 -->
+        <div class="card card--elevated feature-card">
+          <div class="card__icon card__icon--primary">
+            <i class="fas fa-location-crosshairs"></i>
+          </div>
+          <h3 class="card__title">Location-Based Matching</h3>
+          <p class="card__text">Automatically find the nearest verified service providers and auto parts suppliers based on your GPS location using integrated geolocation technology.</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="card card--elevated feature-card">
+          <div class="card__icon card__icon--accent">
+            <i class="fas fa-clock-rotate-left"></i>
+          </div>
+          <h3 class="card__title">Periodic Status Updates</h3>
+          <p class="card__text">Receive regular updates on your provider's progress with practical periodic location tracking designed for real-world connectivity conditions.</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="card card--elevated feature-card">
+          <div class="card__icon card__icon--success">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h3 class="card__title">Verified Providers</h3>
+          <p class="card__text">All service providers undergo admin verification and maintain active subscriptions, ensuring quality control and accountability for every interaction.</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="card card--elevated feature-card">
+          <div class="card__icon card__icon--primary">
+            <i class="fas fa-comments"></i>
+          </div>
+          <h3 class="card__title">In-App Messaging</h3>
+          <p class="card__text">Communicate directly with your matched provider through built-in messaging — coordinate details, share photos, and stay informed without switching apps.</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="card card--elevated feature-card">
+          <div class="card__icon card__icon--accent">
+            <i class="fas fa-toolbox"></i>
+          </div>
+          <h3 class="card__title">Auto Parts Sourcing</h3>
+          <p class="card__text">Find nearby auto parts suppliers alongside mechanics. Get the parts you need quickly with location-filtered results and supplier information.</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="card card--elevated feature-card">
+          <div class="card__icon card__icon--success">
+            <i class="fas fa-star-half-stroke"></i>
+          </div>
+          <h3 class="card__title">Ratings & Feedback</h3>
+          <p class="card__text">Rate service providers after each interaction and read reviews from other motorists — building a trusted community of automotive professionals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOW IT WORKS ===================== -->
+  <section class="section section--light" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge--accent"><i class="fas fa-route"></i> How It Works</span>
+        <h2 class="heading-lg">Help Is Just Four Steps Away</h2>
+        <p>Whether you have a flat tire, engine trouble, or need emergency towing — getting help is fast and straightforward.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <h3 class="step__title">Submit a Request</h3>
+          <p class="step__text">Open Road Buddy, describe your vehicle issue, and your location is automatically detected via GPS.</p>
+        </div>
+        <div class="step">
+          <h3 class="step__title">Get Matched</h3>
+          <p class="step__text">Our system instantly finds nearby verified service providers and parts suppliers and notifies them of your request.</p>
+        </div>
+        <div class="step">
+          <h3 class="step__title">Track Progress</h3>
+          <p class="step__text">Receive periodic status updates on your provider's arrival and communicate via in-app messaging.</p>
+        </div>
+        <div class="step">
+          <h3 class="step__title">Get Back on the Road</h3>
+          <p class="step__text">Once service is completed, rate your provider and get safely back on the road with confidence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPARISON TABLE ===================== -->
+  <section class="section" id="comparison">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge--primary"><i class="fas fa-scale-balanced"></i> Platform Comparison</span>
+        <h2 class="heading-lg">See How Road Buddy Stands Out</h2>
+        <p>Compared to existing solutions, Road Buddy delivers a more complete and controlled roadside assistance experience.</p>
+      </div>
+
+      <div class="comparison">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Rescuennect</th>
+              <th>Fixera</th>
+              <th>Commercial Apps</th>
+              <th class="highlight">Road Buddy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Location-Based Matching</td>
+              <td><i class="fas fa-check check"></i></td>
+              <td><i class="fas fa-check check"></i></td>
+              <td><i class="fas fa-check check"></i></td>
+              <td class="highlight"><i class="fas fa-check check"></i></td>
+            </tr>
+            <tr>
+              <td>Status Updates</td>
+              <td><i class="fas fa-check check"></i></td>
+              <td><i class="fas fa-xmark cross"></i></td>
+              <td><i class="fas fa-check check"></i></td>
+              <td class="highlight"><i class="fas fa-check check"></i></td>
+            </tr>
+            <tr>
+              <td>Provider Coordination</td>
+              <td><i class="fas fa-check check"></i></td>
+              <td><i class="fas fa-check check"></i></td>
+              <td><i class="fas fa-check check"></i></td>
+              <td class="highlight"><i class="fas fa-check check"></i></td>
+            </tr>
+            <tr>
+              <td>Provider Quality Control</td>
+              <td><i class="fas fa-xmark cross"></i></td>
+              <td><i class="fas fa-xmark cross"></i></td>
+              <td><i class="fas fa-xmark cross"></i></td>
+              <td class="highlight"><i class="fas fa-check check"></i></td>
+            </tr>
+            <tr>
+              <td>Subscription-Based Verification</td>
+              <td><i class="fas fa-xmark cross"></i></td>
+              <td><i class="fas fa-xmark cross"></i></td>
+              <td><i class="fas fa-xmark cross"></i></td>
+              <td class="highlight"><i class="fas fa-check check"></i></td>
+            </tr>
+            <tr>
+              <td>In-App Messaging</td>
+              <td><i class="fas fa-xmark cross"></i></td>
+              <td><i class="fas fa-xmark cross"></i></td>
+              <td><i class="fas fa-check check"></i></td>
+              <td class="highlight"><i class="fas fa-check check"></i></td>
+            </tr>
+            <tr>
+              <td>Philippine Context</td>
+              <td><i class="fas fa-check check"></i></td>
+              <td><i class="fas fa-check check"></i></td>
+              <td><i class="fas fa-xmark cross"></i></td>
+              <td class="highlight"><i class="fas fa-check check"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRICING ===================== -->
+  <section class="section section--light" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge--accent"><i class="fas fa-tags"></i> For Service Providers</span>
+        <h2 class="heading-lg">Simple, Transparent Pricing</h2>
+        <p>Start with a free trial and upgrade to keep receiving assistance requests. Motorists use the platform for free.</p>
+      </div>
+
+      <div class="pricing__grid">
+        <!-- Free Trial -->
+        <div class="card card--elevated pricing-card">
+          <div class="pricing-card__name">Free Trial</div>
+          <div class="pricing-card__desc">Get started and experience the platform</div>
+          <div class="pricing-card__price">
+            <div class="pricing-card__amount"><span class="currency">₱</span>0</div>
+            <div class="pricing-card__period">for 30 days</div>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Receive assistance requests
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Location-based visibility
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> In-app messaging
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Basic provider profile
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Status update tools
+            </div>
+          </div>
+          <a href="register.html" class="btn btn--outline btn--full">Start Free Trial</a>
+        </div>
+
+        <!-- Monthly Plan (Featured) -->
+        <div class="card card--elevated pricing-card pricing-card--featured">
+          <div class="pricing-card__badge">Most Popular</div>
+          <div class="pricing-card__name">Monthly Plan</div>
+          <div class="pricing-card__desc">Best for active service providers</div>
+          <div class="pricing-card__price">
+            <div class="pricing-card__amount"><span class="currency">₱</span>499</div>
+            <div class="pricing-card__period">per month</div>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Everything in Free Trial
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Unlimited request matching
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Priority visibility in results
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Enhanced provider profile
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Ratings & review display
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Analytics dashboard
+            </div>
+          </div>
+          <a href="register.html" class="btn btn--primary btn--full btn--lg">Get Started</a>
+        </div>
+
+        <!-- Annual Plan -->
+        <div class="card card--elevated pricing-card">
+          <div class="pricing-card__name">Annual Plan</div>
+          <div class="pricing-card__desc">Save more with yearly billing</div>
+          <div class="pricing-card__price">
+            <div class="pricing-card__amount"><span class="currency">₱</span>4,499</div>
+            <div class="pricing-card__period">per year (save 25%)</div>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Everything in Monthly Plan
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> 2 months free savings
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Featured provider badge
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Priority customer support
+            </div>
+            <div class="pricing-card__feature">
+              <i class="fas fa-check"></i> Advanced analytics
+            </div>
+          </div>
+          <a href="register.html" class="btn btn--outline btn--full">Choose Annual</a>
+        </div>
+      </div>
+
+      <p class="text-center text-sm text-muted" style="margin-top: var(--space-xl);">
+        <i class="fas fa-info-circle"></i> Motorists can use Road Buddy completely free. Pricing applies only to service providers who wish to receive and respond to assistance requests.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge badge--primary"><i class="fas fa-quote-left"></i> What Users Say</span>
+        <h2 class="heading-lg">Trusted by Motorists and Providers Alike</h2>
+        <p>See how Road Buddy is making roadside assistance faster, safer, and more accessible across the Philippines.</p>
+      </div>
+
+      <div class="testimonials__grid">
+        <div class="card card--elevated testimonial-card">
+          <div class="testimonial-card__stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p class="testimonial-card__text">"Nag-break down ako sa EDSA, and within 15 minutes may mechanic na dumating. Hindi ko na kailangan mag-scroll pa ng contacts — Road Buddy handled everything."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">MR</div>
+            <div>
+              <div class="testimonial-card__name">Maria Reyes</div>
+              <div class="testimonial-card__role">Motorist, Manila</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card--elevated testimonial-card">
+          <div class="testimonial-card__stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p class="testimonial-card__text">"As a mechanic shop owner, the subscription is worth it. We now receive verified requests from nearby customers instead of waiting for walk-ins. Our business has grown 40%."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">JS</div>
+            <div>
+              <div class="testimonial-card__name">Juan Santos</div>
+              <div class="testimonial-card__role">Service Provider, Quezon City</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card--elevated testimonial-card">
+          <div class="testimonial-card__stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-stroke"></i>
+          </div>
+          <p class="testimonial-card__text">"Finally, a platform that actually verifies the service providers. I feel safe knowing that the mechanic coming is legitimate and has good reviews from other drivers."</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">AC</div>
+            <div>
+              <div class="testimonial-card__name">Angela Cruz</div>
+              <div class="testimonial-card__role">Motorist, Cebu City</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta__inner">
+        <h2 class="cta__title">Ready to Get Roadside Help Faster?</h2>
+        <p class="cta__text">Join thousands of Filipino motorists and service providers already using Road Buddy. Sign up is free for motorists.</p>
+        <div class="cta__actions">
+          <a href="register.html" class="btn btn--accent btn--lg">
+            <i class="fas fa-rocket"></i> Create Free Account
+          </a>
+          <a href="login.html" class="btn btn--outline-white btn--lg">
+            Log In <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a href="index.html" class="navbar__logo" style="margin-bottom: 0.5rem;">
+            <div class="navbar__logo-icon"><i class="fas fa-road"></i></div>
+            <span class="navbar__logo-text" style="color: var(--white);">RoadBuddy</span>
+          </a>
+          <p class="footer__brand-text">A location-based vehicle support and roadside assistance platform built for Philippine motorists. Connecting you with verified service providers instantly.</p>
+        </div>
+
+        <div>
+          <h4 class="footer__heading">Platform</h4>
+          <a href="#features" class="footer__link">Features</a>
+          <a href="#how-it-works" class="footer__link">How It Works</a>
+          <a href="#pricing" class="footer__link">Pricing</a>
+          <a href="#comparison" class="footer__link">Compare</a>
+        </div>
+
+        <div>
+          <h4 class="footer__heading">Account</h4>
+          <a href="login.html" class="footer__link">Log In</a>
+          <a href="register.html" class="footer__link">Sign Up</a>
+          <a href="pricing.html" class="footer__link">Subscription Plans</a>
+          <a href="#" class="footer__link">Help & Support</a>
+        </div>
+
+        <div>
+          <h4 class="footer__heading">Legal</h4>
+          <a href="#" class="footer__link">Terms of Service</a>
+          <a href="#" class="footer__link">Privacy Policy</a>
+          <a href="#" class="footer__link">Cookie Policy</a>
+          <a href="#" class="footer__link">Contact Us</a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <span>&copy; 2026 RoadBuddy. All rights reserved. An undergraduate capstone project.</span>
+        <div class="footer__social">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <!-- ===================== ROADBUDDY CHATBOT ===================== -->
+  <style>
+    /* Floating bubble */
+    .rb-chat-bubble {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      z-index: 9999;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4338ca, #6366f1);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(67, 56, 202, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .rb-chat-bubble:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 32px rgba(67, 56, 202, 0.55);
+    }
+    .rb-chat-bubble .rb-notif-dot {
+      position: absolute;
+      top: 0.25rem;
+      right: 0.25rem;
+      width: 0.65rem;
+      height: 0.65rem;
+      background: #f97316;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+
+    /* Chat window */
+    .rb-chat-window {
+      position: fixed;
+      bottom: 6.25rem;
+      right: 1.75rem;
+      z-index: 9998;
+      width: 360px;
+      max-height: 520px;
+      border-radius: 1rem;
+      background: #fff;
+      box-shadow: 0 20px 60px rgba(30, 27, 75, 0.22);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid #e0e7ff;
+      transform: translateY(16px) scale(0.97);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: 'Inter', sans-serif;
+    }
+    .rb-chat-window.open {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Header */
+    .rb-chat-header {
+      background: linear-gradient(135deg, #312e9b, #4338ca);
+      color: #fff;
+      padding: 0.875rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      flex-shrink: 0;
+    }
+    .rb-chat-avatar {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .rb-chat-header-info .rb-chat-name { font-size: 0.9rem; font-weight: 600; }
+    .rb-chat-header-info .rb-chat-status { font-size: 0.7rem; opacity: 0.75; }
+    .rb-chat-close {
+      margin-left: auto;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.7);
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 0.2rem;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .rb-chat-close:hover { color: #fff; }
+
+    /* Messages */
+    .rb-chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      background: #fafafa;
+    }
+    .rb-msg {
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-end;
+      max-width: 90%;
+    }
+    .rb-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+    .rb-msg-avatar {
+      width: 1.625rem;
+      height: 1.625rem;
+      border-radius: 50%;
+      background: #e0e7ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      flex-shrink: 0;
+      color: #4338ca;
+    }
+    .rb-bubble {
+      padding: 0.6rem 0.875rem;
+      border-radius: 1rem;
+      font-size: 0.8375rem;
+      line-height: 1.55;
+      max-width: 100%;
+    }
+    .rb-msg.bot .rb-bubble {
+      background: #fff;
+      color: #1e1b4b;
+      border: 1px solid #e0e7ff;
+      border-bottom-left-radius: 0.25rem;
+    }
+    .rb-msg.user .rb-bubble {
+      background: linear-gradient(135deg, #4338ca, #6366f1);
+      color: #fff;
+      border-bottom-right-radius: 0.25rem;
+    }
+
+    /* Typing dots */
+    .rb-typing { display: flex; gap: 4px; align-items: center; padding: 0.5rem 0.25rem; }
+    .rb-dot { width: 6px; height: 6px; border-radius: 50%; background: #a5b4fc; animation: rbBounce 1.1s infinite; }
+    .rb-dot:nth-child(2) { animation-delay: 0.18s; }
+    .rb-dot:nth-child(3) { animation-delay: 0.36s; }
+    @keyframes rbBounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} }
+
+    /* Suggestions */
+    .rb-suggestions {
+      padding: 0.5rem 0.75rem 0.625rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      background: #fff;
+      border-top: 1px solid #e0e7ff;
+      flex-shrink: 0;
+    }
+    .rb-sug-label { font-size: 0.65rem; color: #7b78c8; width: 100%; margin-bottom: 0.1rem; }
+    .rb-sug {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 2rem;
+      border: 1px solid #c7c5f5;
+      color: #4338ca;
+      background: #eef2ff;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .rb-sug:hover { background: #4338ca; color: #fff; border-color: #4338ca; }
+
+    /* Input */
+    .rb-chat-input-row {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.625rem 0.75rem;
+      border-top: 1px solid #e0e7ff;
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .rb-chat-input {
+      flex: 1;
+      padding: 0.55rem 0.875rem;
+      border-radius: 2rem;
+      border: 1px solid #c7c5f5;
+      background: #f5f5ff;
+      color: #1e1b4b;
+      font-size: 0.8375rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .rb-chat-input:focus { border-color: #4338ca; background: #fff; }
+    .rb-send {
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4338ca, #6366f1);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.875rem;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .rb-send:hover { opacity: 0.88; }
+
+    @media (max-width: 420px) {
+      .rb-chat-window { width: calc(100vw - 2rem); right: 1rem; }
+    }
+  </style>
+
+  <!-- Bubble button -->
+  <button class="rb-chat-bubble" id="rbChatBubble" onclick="rbToggleChat()" aria-label="Open RoadBuddy Assistant">
+    <i class="fas fa-comments"></i>
+    <span class="rb-notif-dot"></span>
+  </button>
+
+  <!-- Chat window -->
+  <div class="rb-chat-window" id="rbChatWindow">
+    <div class="rb-chat-header">
+      <div class="rb-chat-avatar">🛣️</div>
+      <div class="rb-chat-header-info">
+        <div class="rb-chat-name">RoadBuddy Assistant</div>
+        <div class="rb-chat-status">Ask me anything about RoadBuddy</div>
+      </div>
+      <button class="rb-chat-close" onclick="rbToggleChat()" aria-label="Close chat"><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="rb-chat-messages" id="rbMessages">
+      <div class="rb-msg bot">
+        <div class="rb-msg-avatar"><i class="fas fa-robot" style="font-size:0.65rem;"></i></div>
+        <div class="rb-bubble">Hi there! 👋 I'm the RoadBuddy assistant. Ask me anything — what we do, how to sign up, pricing, and more!</div>
+      </div>
+    </div>
+
+    <div class="rb-suggestions" id="rbSuggestions">
+      <div class="rb-sug-label">Quick questions:</div>
+      <button class="rb-sug" onclick="rbSuggest(this.textContent)">What is RoadBuddy?</button>
+      <button class="rb-sug" onclick="rbSuggest(this.textContent)">Is it free for motorists?</button>
+      <button class="rb-sug" onclick="rbSuggest(this.textContent)">How do I find a mechanic?</button>
+      <button class="rb-sug" onclick="rbSuggest(this.textContent)">How to sign up as a provider?</button>
+    </div>
+
+    <div class="rb-chat-input-row">
+      <input class="rb-chat-input" id="rbInput" type="text" placeholder="Type your question..." onkeydown="if(event.key==='Enter') rbSend()" />
+      <button class="rb-send" onclick="rbSend()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script>
+    /* ── Pre-written instant answers for the 4 quick-question buttons ── */
+    const RB_QUICK = {
+      'What is RoadBuddy?':
+        'RoadBuddy is a location-based roadside assistance platform built for Philippine motorists. 🛣️ It connects drivers in need — flat tire, dead battery, engine trouble, towing — with the nearest verified service providers in real time, using GPS-powered matching.',
+
+      'Is it free for motorists?':
+        'Yes, 100% free for motorists — always! 🎉 There are no sign-up fees, no hidden charges, and no credit card required. Motorists can request help, track their provider, and message them at no cost.',
+
+      'How do I find a mechanic?':
+        'Just sign up as a motorist and submit a request describing your problem and location. 📍 RoadBuddy automatically matches you with the nearest verified mechanic or service provider within minutes. You can track their route and message them directly in the app!',
+
+      'How to sign up as a provider?':
+        'Head to the Register page and choose "Service Provider." 🔧 Fill in your shop details, service type, and location. You\'ll get a free 30-day trial — no credit card needed. Once our admin team verifies your account, you can start accepting jobs right away!'
+    };
+
+    const RB_SYSTEM = `You are a friendly, helpful chatbot assistant for RoadBuddy — a location-based roadside assistance platform in the Philippines.
+
+About RoadBuddy:
+- Connects motorists (flat tire, dead battery, engine trouble, towing, fuel, etc.) with nearby verified service providers
+- GPS-powered matching finds the nearest available provider automatically
+- Motorists use the platform for FREE — always, no credit card needed
+- Service providers pay a subscription and get a 30-day FREE trial (no credit card for trial)
+- Providers are verified and approved by admins before receiving jobs
+- Three user roles: Motorist, Service Provider, Admin
+- Motorists: request help, track providers, message them, leave reviews
+- Providers: manage jobs, set availability, track earnings
+- Sign-up takes under 2 minutes · Available across the Philippines
+
+If asked something unrelated to RoadBuddy, warmly let them know you only answer RoadBuddy questions and offer to help with those instead. Keep answers to 2–4 sentences. You may reply in Filipino if the user writes in Filipino.`;
+
+    let rbHistory = [];
+    let rbOpen = false;
+
+    function rbToggleChat() {
+      rbOpen = !rbOpen;
+      document.getElementById('rbChatWindow').classList.toggle('open', rbOpen);
+      document.querySelector('.rb-notif-dot').style.display = rbOpen ? 'none' : '';
+      if (rbOpen) document.getElementById('rbInput').focus();
+    }
+
+    function rbAddMsg(role, text) {
+      const el = document.createElement('div');
+      el.className = 'rb-msg ' + role;
+      el.innerHTML = role === 'bot'
+        ? `<div class="rb-msg-avatar"><i class="fas fa-robot" style="font-size:0.65rem;"></i></div><div class="rb-bubble">${text}</div>`
+        : `<div class="rb-bubble">${text}</div>`;
+      const msgs = document.getElementById('rbMessages');
+      msgs.appendChild(el);
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+
+    function rbShowTyping() {
+      const el = document.createElement('div');
+      el.className = 'rb-msg bot'; el.id = 'rbTyping';
+      el.innerHTML = `<div class="rb-msg-avatar"><i class="fas fa-robot" style="font-size:0.65rem;"></i></div><div class="rb-bubble"><div class="rb-typing"><div class="rb-dot"></div><div class="rb-dot"></div><div class="rb-dot"></div></div></div>`;
+      document.getElementById('rbMessages').appendChild(el);
+      document.getElementById('rbMessages').scrollTop = 99999;
+    }
+
+    function rbRemoveTyping() {
+      const t = document.getElementById('rbTyping');
+      if (t) t.remove();
+    }
+
+    function rbHideSuggestions() {
+      document.getElementById('rbSuggestions').style.display = 'none';
+    }
+
+    /* Quick-button click — instant pre-written reply, no API call */
+    function rbSuggest(text) {
+      rbHideSuggestions();
+      rbAddMsg('user', text);
+      const answer = RB_QUICK[text];
+      if (answer) {
+        /* Short delay so it feels like the bot is "reading" the question */
+        rbShowTyping();
+        setTimeout(() => {
+          rbRemoveTyping();
+          rbAddMsg('bot', answer);
+          rbHistory.push({ role: 'user', content: text });
+          rbHistory.push({ role: 'assistant', content: answer });
+        }, 650);
+      } else {
+        /* Fallback — shouldn't happen for the 4 defined buttons */
+        rbAskAPI(text);
+      }
+    }
+
+    /* Free-text input — calls the Claude API */
+    async function rbAskAPI(userText) {
+      rbHistory.push({ role: 'user', content: userText });
+      rbShowTyping();
+      try {
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-20250514',
+            max_tokens: 300,
+            system: RB_SYSTEM,
+            messages: rbHistory
+          })
+        });
+        const data = await res.json();
+        const reply = (data.content || []).map(b => b.text || '').join('').trim()
+          || 'Sorry, something went wrong. Please try again!';
+        rbHistory.push({ role: 'assistant', content: reply });
+        rbRemoveTyping();
+        rbAddMsg('bot', reply);
+      } catch(e) {
+        rbRemoveTyping();
+        rbAddMsg('bot', 'Sorry, I couldn\'t connect right now. You can also reach us via the Contact Us link in the footer!');
+      }
+    }
+
+    function rbSend() {
+      const inp = document.getElementById('rbInput');
+      const text = inp.value.trim();
+      if (!text) return;
+      inp.value = '';
+      rbHideSuggestions();
+      rbAddMsg('user', text);
+      rbAskAPI(text);
+    }
+  </script>
+</body>
+</html>

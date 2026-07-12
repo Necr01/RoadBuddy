@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing & Subscription — Road Buddy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <nav class="navbar navbar--dark" style="position: relative;">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="index.html" class="navbar__logo">
+          <div class="navbar__logo-icon"><i class="fas fa-road"></i></div>
+          <span class="navbar__logo-text" style="color: var(--primary-900);">RoadBuddy</span>
+        </a>
+
+        <div class="navbar__nav">
+          <a href="index.html" class="navbar__link">Home</a>
+          <a href="index.html#features" class="navbar__link">Features</a>
+          <a href="index.html#how-it-works" class="navbar__link">How It Works</a>
+          <a href="index.html#comparison" class="navbar__link">Compare</a>
+        </div>
+
+        <div class="navbar__actions">
+          <a href="login.html" class="btn btn--ghost btn--sm">Log In</a>
+          <a href="register.html" class="btn btn--primary btn--sm">Get Started</a>
+        </div>
+
+        <button class="navbar__mobile-toggle" id="mobileToggle" aria-label="Toggle menu" style="color: var(--gray-700);">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== PRICING HERO ===================== -->
+  <section class="section--gradient" style="padding: 5rem 0 3rem;">
+    <div class="container text-center">
+      <span class="badge badge--dark"><i class="fas fa-tags"></i> Pricing Plans</span>
+      <h1 class="heading-xl" style="color: var(--white); margin-top: 1rem; margin-bottom: 1rem;">
+        Choose the Right Plan for Your Business
+      </h1>
+      <p class="text-lg" style="color: var(--primary-200); max-width: 600px; margin: 0 auto;">
+        Motorists use Road Buddy for free. Service providers can start with a free trial and choose a plan that fits their business needs.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== PRICING TOGGLE ===================== -->
+  <section class="section" style="padding-top: 3rem;">
+    <div class="container">
+      <!-- Billing Toggle -->
+      <div class="text-center" style="margin-bottom: 3rem;">
+        <div class="role-toggle" style="max-width: 300px; margin: 0 auto;" id="billingToggle">
+          <div class="role-toggle__option active" data-billing="monthly">Monthly</div>
+          <div class="role-toggle__option" data-billing="annual">
+            Annual <span class="badge badge--success" style="font-size: 0.625rem; padding: 0.125rem 0.5rem; margin-left: 0.25rem;">-25%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="pricing__grid">
+        <!-- Free Trial -->
+        <div class="card card--elevated pricing-card">
+          <div style="margin-bottom: 1.5rem;">
+            <div style="width: 3rem; height: 3rem; border-radius: var(--radius-lg); background: var(--gray-100); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+              <i class="fas fa-seedling" style="color: var(--gray-600); font-size: 1.25rem;"></i>
+            </div>
+            <div class="pricing-card__name">Starter</div>
+            <div class="pricing-card__desc">Perfect for trying out the platform</div>
+          </div>
+          <div class="pricing-card__price">
+            <div class="pricing-card__amount"><span class="currency">₱</span>0</div>
+            <div class="pricing-card__period">for 30 days</div>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Up to 10 assistance requests</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Basic provider profile</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Location-based visibility</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> In-app messaging</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Status update tools</div>
+            <div class="pricing-card__feature" style="color: var(--gray-300);"><i class="fas fa-xmark" style="color: var(--gray-300);"></i> Priority matching</div>
+            <div class="pricing-card__feature" style="color: var(--gray-300);"><i class="fas fa-xmark" style="color: var(--gray-300);"></i> Analytics dashboard</div>
+          </div>
+          <a href="register.html" class="btn btn--outline btn--full">Start Free Trial</a>
+        </div>
+
+        <!-- Professional (Featured) -->
+        <div class="card card--elevated pricing-card pricing-card--featured">
+          <div class="pricing-card__badge">Most Popular</div>
+          <div style="margin-bottom: 1.5rem;">
+            <div style="width: 3rem; height: 3rem; border-radius: var(--radius-lg); background: var(--primary-100); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+              <i class="fas fa-bolt" style="color: var(--primary-500); font-size: 1.25rem;"></i>
+            </div>
+            <div class="pricing-card__name">Professional</div>
+            <div class="pricing-card__desc">Best for active service providers</div>
+          </div>
+          <div class="pricing-card__price">
+            <div class="pricing-card__amount" id="proPrice"><span class="currency">₱</span>499</div>
+            <div class="pricing-card__period" id="proPeriod">per month</div>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Unlimited assistance requests</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Enhanced provider profile</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Priority visibility in results</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> In-app messaging</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Ratings & reviews display</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Analytics dashboard</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Email notifications</div>
+          </div>
+          <a href="register.html" class="btn btn--primary btn--full btn--lg">Get Started</a>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="card card--elevated pricing-card">
+          <div style="margin-bottom: 1.5rem;">
+            <div style="width: 3rem; height: 3rem; border-radius: var(--radius-lg); background: var(--accent-100); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+              <i class="fas fa-crown" style="color: var(--accent-600); font-size: 1.25rem;"></i>
+            </div>
+            <div class="pricing-card__name">Enterprise</div>
+            <div class="pricing-card__desc">For multi-branch operations</div>
+          </div>
+          <div class="pricing-card__price">
+            <div class="pricing-card__amount" id="entPrice"><span class="currency">₱</span>1,299</div>
+            <div class="pricing-card__period" id="entPeriod">per month</div>
+          </div>
+          <div class="pricing-card__features">
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Everything in Professional</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Multi-branch management</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Featured provider badge</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Priority customer support</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Advanced analytics & reports</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Custom business branding</div>
+            <div class="pricing-card__feature"><i class="fas fa-check"></i> Dedicated account manager</div>
+          </div>
+          <a href="register.html" class="btn btn--outline btn--full">Contact Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section section--light">
+    <div class="container container--narrow">
+      <div class="section-header">
+        <span class="badge badge--primary"><i class="fas fa-circle-question"></i> FAQ</span>
+        <h2 class="heading-lg">Frequently Asked Questions</h2>
+        <p>Everything you need to know about Road Buddy subscriptions and how the platform works.</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <!-- FAQ 1 -->
+        <div class="card faq-item" onclick="toggleFaq(this)">
+          <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+            <h3 style="font-size: 1rem; font-weight: 600; color: var(--gray-900);">Is Road Buddy free for motorists?</h3>
+            <i class="fas fa-chevron-down faq-icon" style="color: var(--gray-400); transition: transform 0.2s;"></i>
+          </div>
+          <div class="faq-answer" style="display: none; margin-top: 1rem; color: var(--gray-500); font-size: 0.9375rem; line-height: 1.7;">
+            Yes! Motorists can use Road Buddy completely free of charge. You can submit assistance requests, track provider status, message providers, and rate services at no cost. Only service providers who want to receive and respond to requests need a subscription.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="card faq-item" onclick="toggleFaq(this)">
+          <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+            <h3 style="font-size: 1rem; font-weight: 600; color: var(--gray-900);">What happens when my free trial ends?</h3>
+            <i class="fas fa-chevron-down faq-icon" style="color: var(--gray-400); transition: transform 0.2s;"></i>
+          </div>
+          <div class="faq-answer" style="display: none; margin-top: 1rem; color: var(--gray-500); font-size: 0.9375rem; line-height: 1.7;">
+            After the 30-day free trial, you'll need to subscribe to continue receiving assistance requests. Your profile and ratings will be preserved. The system checks subscription validity during login and request matching to ensure only active providers are shown to motorists.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="card faq-item" onclick="toggleFaq(this)">
+          <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+            <h3 style="font-size: 1rem; font-weight: 600; color: var(--gray-900);">How does provider verification work?</h3>
+            <i class="fas fa-chevron-down faq-icon" style="color: var(--gray-400); transition: transform 0.2s;"></i>
+          </div>
+          <div class="faq-answer" style="display: none; margin-top: 1rem; color: var(--gray-500); font-size: 0.9375rem; line-height: 1.7;">
+            All service providers undergo admin verification before their profiles become visible to motorists. This includes validating business information, service capabilities, and contact details. This quality control ensures motorists are connected with legitimate, reliable providers.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="card faq-item" onclick="toggleFaq(this)">
+          <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+            <h3 style="font-size: 1rem; font-weight: 600; color: var(--gray-900);">How does location matching work?</h3>
+            <i class="fas fa-chevron-down faq-icon" style="color: var(--gray-400); transition: transform 0.2s;"></i>
+          </div>
+          <div class="faq-answer" style="display: none; margin-top: 1rem; color: var(--gray-500); font-size: 0.9375rem; line-height: 1.7;">
+            Road Buddy uses GPS and geolocation APIs (such as Google Maps or OpenStreetMap) to detect your current location and filter nearby service providers and parts suppliers based on distance. The system calculates proximity and presents the closest available, verified providers.
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="card faq-item" onclick="toggleFaq(this)">
+          <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+            <h3 style="font-size: 1rem; font-weight: 600; color: var(--gray-900);">Can I cancel my subscription anytime?</h3>
+            <i class="fas fa-chevron-down faq-icon" style="color: var(--gray-400); transition: transform 0.2s;"></i>
+          </div>
+          <div class="faq-answer" style="display: none; margin-top: 1rem; color: var(--gray-500); font-size: 0.9375rem; line-height: 1.7;">
+            Yes, you can cancel your subscription at any time from your provider dashboard. You'll continue to have access until the end of your current billing period. Your profile, ratings, and history will be preserved if you choose to resubscribe later.
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="card faq-item" onclick="toggleFaq(this)">
+          <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+            <h3 style="font-size: 1rem; font-weight: 600; color: var(--gray-900);">What types of services can providers offer?</h3>
+            <i class="fas fa-chevron-down faq-icon" style="color: var(--gray-400); transition: transform 0.2s;"></i>
+          </div>
+          <div class="faq-answer" style="display: none; margin-top: 1rem; color: var(--gray-500); font-size: 0.9375rem; line-height: 1.7;">
+            Providers can offer various automotive services including mechanical repairs, towing, auto parts supply, tire services, battery replacement, fuel delivery, and more. Multi-service providers can list all their capabilities to appear in more search results.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CTA ===================== -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta__inner">
+        <h2 class="cta__title">Ready to Grow Your Automotive Business?</h2>
+        <p class="cta__text">Join Road Buddy's network of verified service providers and start receiving assistance requests from motorists in your area.</p>
+        <div class="cta__actions">
+          <a href="register.html" class="btn btn--accent btn--lg">
+            <i class="fas fa-rocket"></i> Start Free Trial
+          </a>
+          <a href="index.html" class="btn btn--outline-white btn--lg">
+            Learn More <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a href="index.html" class="navbar__logo" style="margin-bottom: 0.5rem;">
+            <div class="navbar__logo-icon"><i class="fas fa-road"></i></div>
+            <span class="navbar__logo-text" style="color: var(--white);">RoadBuddy</span>
+          </a>
+          <p class="footer__brand-text">A location-based vehicle support and roadside assistance platform built for Philippine motorists.</p>
+        </div>
+        <div>
+          <h4 class="footer__heading">Platform</h4>
+          <a href="index.html#features" class="footer__link">Features</a>
+          <a href="index.html#how-it-works" class="footer__link">How It Works</a>
+          <a href="pricing.html" class="footer__link">Pricing</a>
+        </div>
+        <div>
+          <h4 class="footer__heading">Account</h4>
+          <a href="login.html" class="footer__link">Log In</a>
+          <a href="register.html" class="footer__link">Sign Up</a>
+          <a href="#" class="footer__link">Help & Support</a>
+        </div>
+        <div>
+          <h4 class="footer__heading">Legal</h4>
+          <a href="#" class="footer__link">Terms of Service</a>
+          <a href="#" class="footer__link">Privacy Policy</a>
+          <a href="#" class="footer__link">Contact Us</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2026 RoadBuddy. All rights reserved.</span>
+        <div class="footer__social">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
